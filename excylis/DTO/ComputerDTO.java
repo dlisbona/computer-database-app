@@ -1,11 +1,10 @@
-package com.excylis.model;
-import java.sql.Timestamp;
+package com.excylis.DTO;
 
-// This class return a computer with SQL compatible attributes
 
-public class BeanComputer {
-	
-	public BeanComputer(int id, String name, Timestamp introduced, Timestamp discontinued, int company_id) {
+//This class return a computer with java compatible attributes 
+public class ComputerDTO {
+
+	public ComputerDTO(int id, String name, String introduced, String discontinued, int company_id) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -16,8 +15,8 @@ public class BeanComputer {
 	
 	private int id;
 	private String name;
-	private Timestamp introduced;
-	private Timestamp discontinued;
+	private String introduced;
+	private String discontinued;
 	private int company_id;
 	
 	
@@ -34,16 +33,17 @@ public class BeanComputer {
 		this.name = name;
 	}
 	
-	public Timestamp getIntroduced() {
+	public String getIntroduced() {
 		return introduced;
 	}
-	public void setIntroduced(Timestamp introduced) {
+	public void setIntroduced(String introduced) {
 		this.introduced = introduced;
 	}
-	public Timestamp getDiscontinued() {
+	public String getDiscontinued() {
 		return discontinued;
 	}
-	public void setDiscontinued(Timestamp discontinued) {
+	
+	public void setDiscontinued(String discontinued) {
 		this.discontinued = discontinued;
 	}
 	public int getCompany_id() {

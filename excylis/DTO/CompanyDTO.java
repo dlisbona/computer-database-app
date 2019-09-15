@@ -1,10 +1,10 @@
-package com.excylis.model;
+package com.excylis.DTO;
 
+// This class return a company with java compatible attributes
 
-// This class return a company with SQL compatibles attributes 
-public class BeanCompany {
+public class CompanyDTO {
 
-	public BeanCompany(Integer id, String name) {
+	public CompanyDTO(Integer id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -26,7 +26,6 @@ public class BeanCompany {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	
 	
 	
