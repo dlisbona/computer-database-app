@@ -6,12 +6,24 @@ import java.sql.*;
 public class ConnectionMySQL {
 	        	  
 	// config JDBC <-> tomcat
+	
 		  	private static String url = "jdbc:mysql://localhost:3306/computer-database-db";
 		  	private static String user = "admincdb";
 		  	private static String passwd = "qwerty1234";
-		  	private static Connection connect;
+		  	protected Connection connect;
+		  	private static ConnectionMySQL instance = new ConnectionMySQL();
 		  	
-		  	public static Connection getInstance(){
+		  	private ConnectionMySQL() {}
+		  	
+		  	public static ConnectionMySQL getInstance() 
+		    { 
+		        if (instance == null) 
+		        	instance = new ConnectionMySQL(); 
+		  
+		        return instance; 
+		    } 
+		  	
+		  	public Connection getConnection(){
 		  		try {
 		  			// JDBC driver instantiated 
 					Class.forName("com.mysql.jdbc.Driver");

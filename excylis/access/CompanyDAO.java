@@ -6,29 +6,34 @@ import com.excylis.model.BeanCompany;
 // This class allows java manipulation of the SQL table company
 
 public class CompanyDAO{
-	    private static Connection connect = ConnectionMySQL.getInstance();
-	    private static ResultSet result;       
+	    private ConnectionMySQL connect;
+	    private static ResultSet result;  
+	    
+	    public CompanyDAO() {
+	    	super();
+	    	this.connect = ConnectionMySQL.getInstance();
+	    }
 	    
 	    // Return a list of company with java attributes 
-	    public static List<BeanCompany> requete(String requeteSQL) {
+	    public List<BeanCompany> requete(String requeteSQL) {
 	    List<BeanCompany> companies = new ArrayList<BeanCompany>();
 			
 	       		try {
-				result = connect.createStatement().executeQuery(requeteSQL);
+				result = connect.getConnection().createStatement().executeQuery(requeteSQL);
 				
-				// Explore all the table/result 
+				// Explore all the table/result
 				while (result.next()) {
 	    		   final int id;
 	    		   final String name;
+	    		  
+	    		   // Harvest the fields 
 	    		   id = result.getInt("id");
 	               name = result.getString("name");
 	              
-	               
-	               
+	               // Instantiate and set company's attributes
 	               BeanCompany company = new BeanCompany(id, name);               
 	               company.setId(id);
 	               company.setName(name);
-	               
 	               companies.add(company);
 	            }
 
