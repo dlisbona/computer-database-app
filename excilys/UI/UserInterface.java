@@ -3,7 +3,6 @@ package com.excilys.UI;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
-import com.excilys.access.ComputerDAO;
 import com.excilys.mapper.Mapper;
 import com.excilys.model.BeanCompany;
 import com.excilys.model.BeanComputer;
@@ -118,30 +117,18 @@ public class UserInterface {
         System.out.println("|                                |");
         String newComputerName = myInput.next();
 
-
         System.out.println("|     INSERT NEW          ID     |");
         int newComputerId = myInput.nextInt();
 
-
         System.out.println("|     INTRODUCTION DATE 1        |");
+
         String newIntroductionDate1 = myInput.next();
-
-        // System.out.println("| INTRODUCTION DATE 2 |");
-        // String newIntroductionDate2 = myInput.next();
-
         System.out.println("|     END DATE 1                 |");
-        String newEndDate1 = myInput.next();
-        //
-        // System.out.println("| END DATE 2 |");
-        // String newEndDate2 = myInput.next();
 
+        String newEndDate1 = myInput.next();
 
         System.out.println("|     COMPANY ID                 |");
         int newCompanyId = myInput.nextInt();
-
-        // String newEndDate = newEndDate1 + " " + newEndDate1;
-        // String newIntroductionDate = newIntroductionDate1 + " " + newIntroductionDate2;
-
 
         computerService.addComputer(newComputerId, newComputerName, newIntroductionDate1,
             newEndDate1, newCompanyId);
@@ -172,78 +159,81 @@ public class UserInterface {
         System.out.println();
 
         int selectionIdUpdate = myInput.nextInt();
+        int choice = 0;
+
+        while (choice != 1) {
+          System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
+          System.out.println("|                                |");
+          System.out.println("|     CHOOSE FIELD TO UPDATE     |");
+          System.out.println("|                                |");
+          System.out.println("|       1 = id                   |");
+          System.out.println("|       2 = name                 |");
+          System.out.println("|       3 = introduced           |");
+          System.out.println("|       4 = discontinued         |");
+          System.out.println("|       5 = id_company        	 |");
+          System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
+          System.out.println();
+
+          int fieldUpdate = myInput.nextInt();
+
+          System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
+          System.out.println("|                                |");
+          System.out.println("|       INSERT NEW VALUE         |");
+          System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
+          System.out.println();
 
 
-        System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
-        System.out.println("|                                |");
-        System.out.println("|     CHOOSE FIELD TO UPDATE     |");
-        System.out.println("|                                |");
-        System.out.println("|       1 = id                   |");
-        System.out.println("|       2 = name                 |");
-        System.out.println("|       3 = introduced           |");
-        System.out.println("|       4 = discontinued         |");
-        System.out.println("|       5 = id_company        	 |");
-        System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
-        System.out.println();
-
-        int fieldUpdate = myInput.nextInt();
-
-
-        System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
-        System.out.println("|                                |");
-        System.out.println("|       INSERT NEW VALUE         |");
-        System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
-        System.out.println();
-
-
-        String valueUpdateString = "";
-        String sql = "";
-        int valueUpdateInt = 0;
-        ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
-
-        switch (fieldUpdate) {
+          Object valueUpdate = myInput.next();
 
 
 
-          case 1:
-            valueUpdateInt = myInput.nextInt();
-            sql = "UPDATE computer SET id=" + valueUpdateInt + " WHERE id=" + selectionIdUpdate;
-            computerDAO.updateComputer(sql);
-            myInput.close();
-            break;
+          String valueUpdateString = "";
+          String sql = "";
+          int valueUpdateInt = 0;
 
-          case 2:
-            valueUpdateString = myInput.next();
-            sql = "UPDATE computer SET name = '" + valueUpdateString + "' WHERE id = "
-                + selectionIdUpdate;
-            computerDAO.updateComputer(sql);
-            myInput.close();
-            break;
+          ComputerService computerservice = ComputerService.getInstance();
 
-          case 3:
-            valueUpdateString = myInput.next();
-            sql = "UPDATE computer SET introduced=" + valueUpdateString + " WHERE id="
-                + selectionIdUpdate;
-            computerDAO.updateComputer(sql);
-            myInput.close();
-            break;
 
-          case 4:
-            valueUpdateString = myInput.next();
-            sql = "UPDATE computer SET discontinued" + valueUpdateString + " WHERE id="
-                + selectionIdUpdate;
-            computerDAO.updateComputer(sql);
-            myInput.close();
-            break;
+          computerService.computerUpdate(selectionIdUpdate, fieldUpdate, valueUpdate);
 
-          case 5:
-            valueUpdateInt = myInput.nextInt();
-            sql = "UPDATE computer SET company_id=" + valueUpdateInt + " WHERE id="
-                + selectionIdUpdate;
-            computerDAO.updateComputer(sql);
-            myInput.close();
-            break;
+
+
+          // switch (fieldUpdate) {
+          //
+          // case 1:
+          // valueUpdateInt = myInput.nextInt();
+          // sql = "UPDATE computer SET id=" + valueUpdateInt + " WHERE id=" + selectionIdUpdate;
+          // computerDAO.updateComputer(sql);
+          //
+          // case 2:
+          // valueUpdateString = myInput.next();
+          // sql = "UPDATE computer SET name = '" + valueUpdateString + "' WHERE id = "
+          // + selectionIdUpdate;
+          // computerDAO.updateComputer(sql);
+          //
+          // case 3:
+          // valueUpdateString = myInput.next();
+          // sql = "UPDATE computer SET introduced=" + valueUpdateString + " WHERE id="
+          // + selectionIdUpdate;
+          // computerDAO.updateComputer(sql);
+          //
+          // case 4:
+          // valueUpdateString = myInput.next();
+          // sql = "UPDATE computer SET discontinued" + valueUpdateString + " WHERE id="
+          // + selectionIdUpdate;
+          // computerDAO.updateComputer(sql);
+          //
+          // case 5:
+          // valueUpdateInt = myInput.nextInt();
+          // sql = "UPDATE computer SET company_id=" + valueUpdateInt + " WHERE id="
+          // + selectionIdUpdate;
+          // computerDAO.updateComputer(sql);
+          //
+          // }
+
         }
+        myInput.close();
+
     }
   }
 }

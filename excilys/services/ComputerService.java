@@ -1,6 +1,7 @@
 package com.excilys.services;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.access.ComputerDAO;
@@ -54,10 +55,42 @@ public class ComputerService {
 
   }
 
+  public void computerUpdate(int selectionIdUpdate, int selection, String valueUpdate) {
 
+    switch (Mapper.mapperSwitchUpdate(selectionIdUpdate)) {
+      case updateComputerName:
+        int valueUpdateId = Integer.parseInt(valueUpdate);
+        String sql = "UPDATE computer SET id=" + valueUpdateId + " WHERE id=" + selectionIdUpdate;
+        computerDAO.updateComputer(sql);
 
-  static void updateComputer(String sql) {
+      case updateComputerId:
+        String valueUpdateName = (String) valueUpdate;
+        sql =
+            "UPDATE computer SET name = '" + valueUpdateName + "' WHERE id = " + selectionIdUpdate;
+        computerDAO.updateComputer(sql);
 
+      case updateComputerIntroduced:
+
+        Timestamp valueUpdateIntroduced = Mapper.stringToTime((String) valueUpdate);
+        sql = "UPDATE computer SET introduced=" + valueUpdateIntroduced + " WHERE id="
+            + selectionIdUpdate;
+        computerDAO.updateComputer(sql);
+
+      case updateComputerDiscontinued:
+        Timestamp valueUpdateDiscontinued = Mapper.stringToTime((String) valueUpdate);
+        sql = "UPDATE computer SET discontinued" + valueUpdateDiscontinued + " WHERE id="
+            + selectionIdUpdate;
+        computerDAO.updateComputer(sql);
+
+      case updateComputerCompanyId:
+        int valueUpdateIdCompany = Integer.parseInt(valueUpdate);
+        sql = "UPDATE computer SET company_id=" + valueUpdateIdCompany + " WHERE id="
+            + selectionIdUpdate;
+        computerDAO.updateComputer(sql);
+
+    }
   }
+
+
 
 }

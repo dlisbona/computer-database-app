@@ -31,7 +31,7 @@ public class Mapper {
     return mapped;
   }
 
-  private static Timestamp stringToTime(String i) {
+  public static Timestamp stringToTime(String i) {
     final Timestamp mapped = Timestamp.valueOf(i);
     return mapped;
   }
@@ -69,12 +69,36 @@ public class Mapper {
 
   }
 
+  public enum updateEnum {
+    updateComputerName, updateComputerId, updateComputerIntroduced, updateComputerDiscontinued, updateComputerCompanyId,
+  };
+
+  public static updateEnum mapperSwitchUpdate(int selectionMenu) {
+
+    if (selectionMenu == 1) {
+      return updateEnum.updateComputerName;
+    }
+    if (selectionMenu == 2) {
+      return updateEnum.updateComputerId;
+    }
+    if (selectionMenu == 3) {
+      return updateEnum.updateComputerIntroduced;
+    }
+    if (selectionMenu == 4) {
+      return updateEnum.updateComputerDiscontinued;
+    }
+    if (selectionMenu == 5) {
+      return updateEnum.updateComputerCompanyId;
+    } else {
+      return updateEnum.updateComputerName;
+    }
+  }
+
   public enum selectionEnum {
     computerList, companyList, computerDetail, insertComputer, deleteComputer, updateComputer
   };
 
   public static selectionEnum mapperSwitchEnum(int selectionMenu) {
-
 
     if (selectionMenu == 1) {
       return selectionEnum.computerList;
