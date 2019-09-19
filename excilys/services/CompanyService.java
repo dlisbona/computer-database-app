@@ -22,6 +22,4 @@ public class CompanyService {
     final List<BeanCompany> company = companyDAO.requete("SELECT * FROM company");
     return company;
   }
-
-
 }

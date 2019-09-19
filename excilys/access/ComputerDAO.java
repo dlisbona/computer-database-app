@@ -106,6 +106,7 @@ public class ComputerDAO {
       System.out.println("update");
     } catch (SQLException e) {
       System.out.println(e.getMessage());
+      e.printStackTrace();
     }
   }
 

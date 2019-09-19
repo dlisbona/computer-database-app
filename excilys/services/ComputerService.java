@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 import com.excilys.DTO.ComputerDTO;
+import com.excilys.UI.UserInterface;
 import com.excilys.access.ComputerDAO;
 import com.excilys.mapper.Mapper;
 import com.excilys.model.BeanComputer;
@@ -55,39 +56,58 @@ public class ComputerService {
 
   }
 
-  public void computerUpdate(int selectionIdUpdate, int selection, String valueUpdate) {
-
-    switch (Mapper.mapperSwitchUpdate(selectionIdUpdate)) {
+  public void updateComputer(int selectionIdUpdate, String valueUpdate, int selectionMenu) {
+    switch (Mapper.mapperSwitchUpdate(selectionMenu)) {
       case updateComputerName:
-        int valueUpdateId = Integer.parseInt(valueUpdate);
-        String sql = "UPDATE computer SET id=" + valueUpdateId + " WHERE id=" + selectionIdUpdate;
-        computerDAO.updateComputer(sql);
 
-      case updateComputerId:
         String valueUpdateName = (String) valueUpdate;
-        sql =
-            "UPDATE computer SET name = '" + valueUpdateName + "' WHERE id = " + selectionIdUpdate;
+        String sql =
+            "UPDATE computer SET name='" + valueUpdateName + "' WHERE id=" + selectionIdUpdate;
         computerDAO.updateComputer(sql);
+        break;
+      case updateComputerId:
+
+
+        int valueUpdateId = Integer.parseInt(valueUpdate);
+        sql = "UPDATE computer SET name = '" + valueUpdateId + "' WHERE id = " + selectionIdUpdate;
+        computerDAO.updateComputer(sql);
+        break;
 
       case updateComputerIntroduced:
 
-        Timestamp valueUpdateIntroduced = Mapper.stringToTime((String) valueUpdate);
-        sql = "UPDATE computer SET introduced=" + valueUpdateIntroduced + " WHERE id="
+        valueUpdate = valueUpdate + "T00:00:00";
+
+        Timestamp valueUpdateIntroduced =
+            Mapper.localToTime(Mapper.stringToLocalDateTime(valueUpdate));
+
+        sql = "UPDATE computer SET introduced='" + valueUpdateIntroduced + "' WHERE id="
             + selectionIdUpdate;
         computerDAO.updateComputer(sql);
+        break;
 
       case updateComputerDiscontinued:
-        Timestamp valueUpdateDiscontinued = Mapper.stringToTime((String) valueUpdate);
-        sql = "UPDATE computer SET discontinued" + valueUpdateDiscontinued + " WHERE id="
+
+        valueUpdate = valueUpdate + "T00:00:00";
+
+        Timestamp valueUpdateDiscontinued =
+            Mapper.localToTime(Mapper.stringToLocalDateTime(valueUpdate));
+
+        sql = "UPDATE computer SET discontinued='" + valueUpdateDiscontinued + "'WHERE id="
             + selectionIdUpdate;
         computerDAO.updateComputer(sql);
+        break;
 
       case updateComputerCompanyId:
         int valueUpdateIdCompany = Integer.parseInt(valueUpdate);
-        sql = "UPDATE computer SET company_id=" + valueUpdateIdCompany + " WHERE id="
+        sql = "UPDATE computer SET company_id='" + valueUpdateIdCompany + "'WHERE id="
             + selectionIdUpdate;
         computerDAO.updateComputer(sql);
+        break;
+      case exit:
 
+        UserInterface.setFieldUpdate(6);
+
+        break;
     }
   }
 

@@ -9,15 +9,23 @@ import com.excilys.model.BeanComputer;
 
 
 public class Mapper {
-
   private static LocalDate stringToLocalDate(String i) {
     final LocalDate mapped = LocalDate.parse(i);
     return mapped;
-
   }
 
   private static LocalTime stringToLocalTime(String i) {
     final LocalTime mapped = LocalTime.parse(i);
+    return mapped;
+  }
+
+  public static LocalDateTime stringToLocalDateTime(String i) {
+    final LocalDateTime mapped = LocalDateTime.parse(i);
+    return mapped;
+  }
+
+  public static Timestamp localToTime(LocalDateTime i) {
+    final Timestamp mapped = Timestamp.valueOf(i);
     return mapped;
   }
 
@@ -70,28 +78,25 @@ public class Mapper {
   }
 
   public enum updateEnum {
-    updateComputerName, updateComputerId, updateComputerIntroduced, updateComputerDiscontinued, updateComputerCompanyId,
+    updateComputerId, updateComputerName, updateComputerIntroduced, updateComputerDiscontinued, updateComputerCompanyId, exit
   };
 
   public static updateEnum mapperSwitchUpdate(int selectionMenu) {
 
-    if (selectionMenu == 1) {
-      return updateEnum.updateComputerName;
+    switch (selectionMenu) {
+      case 1:
+        return updateEnum.updateComputerId;
+      case 2:
+        return updateEnum.updateComputerName;
+      case 3:
+        return updateEnum.updateComputerIntroduced;
+      case 4:
+        return updateEnum.updateComputerDiscontinued;
+      case 5:
+        return updateEnum.updateComputerCompanyId;
+      case 6:
     }
-    if (selectionMenu == 2) {
-      return updateEnum.updateComputerId;
-    }
-    if (selectionMenu == 3) {
-      return updateEnum.updateComputerIntroduced;
-    }
-    if (selectionMenu == 4) {
-      return updateEnum.updateComputerDiscontinued;
-    }
-    if (selectionMenu == 5) {
-      return updateEnum.updateComputerCompanyId;
-    } else {
-      return updateEnum.updateComputerName;
-    }
+    return updateEnum.exit;
   }
 
   public enum selectionEnum {
@@ -100,25 +105,20 @@ public class Mapper {
 
   public static selectionEnum mapperSwitchEnum(int selectionMenu) {
 
-    if (selectionMenu == 1) {
-      return selectionEnum.computerList;
+    switch (selectionMenu) {
+      case 1:
+        return selectionEnum.computerList;
+      case 2:
+        return selectionEnum.companyList;
+      case 3:
+        return selectionEnum.computerDetail;
+      case 4:
+        return selectionEnum.insertComputer;
+      case 5:
+        return selectionEnum.deleteComputer;
+      case 6:
+        return selectionEnum.updateComputer;
     }
-    if (selectionMenu == 2) {
-      return selectionEnum.companyList;
-    }
-    if (selectionMenu == 3) {
-      return selectionEnum.computerDetail;
-    }
-    if (selectionMenu == 4) {
-      return selectionEnum.insertComputer;
-    }
-    if (selectionMenu == 5) {
-      return selectionEnum.deleteComputer;
-    }
-    if (selectionMenu == 6) {
-      return selectionEnum.updateComputer;
-    } else {
-      return selectionEnum.updateComputer;
-    }
+    return selectionEnum.companyList;
   }
 }
