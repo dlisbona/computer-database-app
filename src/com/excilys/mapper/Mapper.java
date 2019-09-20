@@ -1,23 +1,12 @@
 package com.excilys.mapper;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.model.BeanComputer;
 
 
 public class Mapper {
-  private static LocalDate stringToLocalDate(String i) {
-    final LocalDate mapped = LocalDate.parse(i);
-    return mapped;
-  }
-
-  private static LocalTime stringToLocalTime(String i) {
-    final LocalTime mapped = LocalTime.parse(i);
-    return mapped;
-  }
 
   public static LocalDateTime stringToLocalDateTime(String i) {
     final LocalDateTime mapped = LocalDateTime.parse(i);
@@ -29,15 +18,6 @@ public class Mapper {
     return mapped;
   }
 
-  private static LocalDateTime datePlusTime(LocalDate date, LocalTime time) {
-    final LocalDateTime mapped = LocalDateTime.of(date, time);
-    return mapped;
-  }
-
-  private static Timestamp localToTimeStamp(String i) {
-    final Timestamp mapped = Timestamp.valueOf(i);
-    return mapped;
-  }
 
   public static Timestamp stringToTime(String i) {
     final Timestamp mapped = Timestamp.valueOf(i);

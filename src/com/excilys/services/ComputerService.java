@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 import com.excilys.DTO.ComputerDTO;
+import com.excilys.UI.Pagination;
 import com.excilys.UI.UserInterface;
 import com.excilys.access.ComputerDAO;
 import com.excilys.mapper.Mapper;
@@ -28,8 +29,12 @@ public class ComputerService {
 
     if (i == 0) {
 
-      final List<BeanComputer> computerList = computerDAO.requete("SELECT * FROM computer");
-      return computerList;
+      List<BeanComputer> computerList = computerDAO.requete("SELECT * FROM computer");
+
+      computerList = Pagination.getPages(computerList, 0);
+
+      return computerList.subList(0, 10);
+
 
     } else {
       ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
