@@ -20,7 +20,6 @@ public class UserInterface {
 
   public static void setFieldUpdate(int field) {
     fieldUpdate = field;
-
   }
 
 
@@ -47,6 +46,8 @@ public class UserInterface {
 
       case computerList:
         myInput.close();
+
+
         List<BeanComputer> computerList = computerService.getComputerList(0);
 
         System.out.println();
@@ -65,6 +66,8 @@ public class UserInterface {
           System.out.println();
 
         }
+
+
         break;
 
       case companyList:

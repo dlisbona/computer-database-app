@@ -17,6 +17,7 @@ public class CompanyService {
     return InstanceCompanyService;
   }
 
+
   public static List<BeanCompany> getCompanyList() throws SQLException {
     final CompanyDAO companyDAO = CompanyDAO.getInstanceCompanyDAO();
     final List<BeanCompany> company = companyDAO.requete("SELECT * FROM company");
