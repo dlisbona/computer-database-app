@@ -45,29 +45,43 @@ public class UserInterface {
     switch (Mapper.mapperSwitchEnum(myInput.nextInt())) {
 
       case computerList:
-        myInput.close();
+
+        List<BeanComputer> computerListTotal = computerService.getComputerList(0);
 
 
-        List<BeanComputer> computerList = computerService.getComputerList(0);
+        char reponse = 'O';
+        int incremente = 0;
 
-        System.out.println();
-        System.out.println(
-            "-------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%5s %70s %23s %23s %13s", "ID", "NAME", "INTRODUCED", "DISCONTINUED",
-            "COMPANY_ID");
-        System.out.println();
-        System.out.println(
-            "-------------------------------------------------------------------------------------------------------------------------------------------");
-        for (int i = 0; i < computerList.size(); i++) {
+        while (reponse == 'O') {
 
-          System.out.format("%5s %70s %23s %23s %13s", computerList.get(i).getId(),
-              computerList.get(i).getName(), computerList.get(i).getIntroduced(),
-              computerList.get(i).getDiscontinued(), computerList.get(i).getCompany_id());
+          List<BeanComputer> computerList;
+          computerList = Pagination.getPages(computerListTotal, incremente);
+
+          System.out.print("incremente " + incremente);
+          System.out.print("liste " + computerList.size());
+
           System.out.println();
+          System.out.println(
+              "-------------------------------------------------------------------------------------------------------------------------------------------");
+          System.out.printf("%5s %70s %23s %23s %13s", "ID", "NAME", "INTRODUCED", "DISCONTINUED",
+              "COMPANY_ID");
+          System.out.println();
+          System.out.println(
+              "-------------------------------------------------------------------------------------------------------------------------------------------");
+          for (int i = 0; i < computerList.size(); i++) {
 
+            System.out.format("%5s %70s %23s %23s %13s", computerList.get(i).getId(),
+                computerList.get(i).getName(), computerList.get(i).getIntroduced(),
+                computerList.get(i).getDiscontinued(), computerList.get(i).getCompany_id());
+            System.out.println();
+          }
+
+          System.out.println("Voulez-vous passer à la page suivante ? (O/N)");
+          reponse = myInput.next().charAt(0);
+          incremente = incremente + 10;
         }
 
-
+        myInput.close();
         break;
 
       case companyList:

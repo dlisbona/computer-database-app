@@ -6,6 +6,6 @@ import com.excilys.model.BeanComputer;
 public class Pagination {
 
   public static List<BeanComputer> getPages(List<BeanComputer> list, int i) {
-    return list.subList(i, i + 10);
+    return list.subList(i, 10 + i);
   }
 }
