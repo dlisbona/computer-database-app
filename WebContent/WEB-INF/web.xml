@@ -8,23 +8,64 @@
   
 version="4.0">
   
+  
     <servlet>
-        <servlet-name>WebAppGet</servlet-name>
-        <servlet-class>com.excilys.servlet.WebAppGet</servlet-class>
+        <servlet-name>WebAppGetEditComputer</servlet-name>
+        <servlet-class>com.excilys.servlet.WebAppGetEditComputer</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>WebAppGet</servlet-name>
+        <servlet-name>WebAppGetEditComputer</servlet-name>
+        <url-pattern>/editcomputer</url-pattern>
+    </servlet-mapping>
+
+
+   <servlet>
+        <servlet-name>WebAppGetAddComputer</servlet-name>
+        <servlet-class>com.excilys.servlet.WebAppGetAddComputer</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>WebAppGetAddComputer</servlet-name>
+        <url-pattern>/addcomputer</url-pattern>
+    </servlet-mapping>
+
+
+   <servlet>
+        <servlet-name>WebAppGetDashboard</servlet-name>
+        <servlet-class>com.excilys.servlet.WebAppGetDashboard</servlet-class>
+    </servlet>
+    
+       <servlet-mapping>
+        <servlet-name>WebAppGetDashboard</servlet-name>
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>WebAppGet</servlet-name>
-        <url-pattern>/403</url-pattern>
-    </servlet-mapping>
-   
+   <servlet>
+        <servlet-name>WebAppGet404</servlet-name>
+        <servlet-class>com.excilys.servlet.WebAppGet404</servlet-class>
+    </servlet>
 
-      <session-config>
+    <servlet-mapping>
+        <servlet-name>WebAppGet404</servlet-name>
+        <url-pattern>/404</url-pattern>
+    </servlet-mapping>
+    
+    <error-page>
+		<error-code>403</error-code>
+		<location>/WEB-INF/403.jsp</location>
+	</error-page>
+
+ <error-page>
+		<error-code>403</error-code>
+		<location>/WEB-INF/403.jsp</location>
+	</error-page>
+ <error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/500.jsp</location>
+	</error-page>
+
+     <session-config>
     <session-timeout>15</session-timeout>
 	</session-config>
 

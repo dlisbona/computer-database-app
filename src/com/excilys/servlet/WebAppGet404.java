@@ -9,15 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-public class WebAppGet extends HttpServlet {
+public class WebAppGet404 extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
     ServletContext servletContext = this.getServletContext();
-
-    RequestDispatcher requestDispacher =
-        servletContext.getRequestDispatcher("/WEB-INF/editComputer.jsp");
+    RequestDispatcher requestDispacher = servletContext.getRequestDispatcher("/WEB-INF/404.jsp");
     requestDispacher.forward(request, response);
+
 
   }
 }
