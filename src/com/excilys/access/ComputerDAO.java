@@ -27,6 +27,7 @@ public class ComputerDAO {
   }
 
 
+
   public List<BeanComputer> requete(String requeteSQL) {
     computers = new ArrayList<BeanComputer>();
     try {

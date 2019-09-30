@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.excilys.model.BeanComputer;
 import com.excilys.services.ComputerService;
 
+
 @SuppressWarnings("serial")
 public class WebAppGetDashboard extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
