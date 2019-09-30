@@ -19,7 +19,6 @@ public class ComputerDTO {
   private String discontinued;
   private int company_id;
 
-
   public int getId() {
     return id;
   }

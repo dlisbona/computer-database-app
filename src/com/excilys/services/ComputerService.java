@@ -28,16 +28,27 @@ public class ComputerService {
 
     if (i == 0) {
 
+      // List<BeanComputer> computerList = computerDAO.requete("SELECT * FROM computer");
+      // return computerList;
+      //
       List<BeanComputer> computerList = computerDAO.requete("SELECT * FROM computer");
       return computerList;
 
 
-    } else {
+
+    } else if (i == 1) {
       ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
       final List<BeanComputer> computerList =
-          computerDAO.requete("SELECT * FROM computer WHERE id='" + i + "'");
+          computerDAO.requete("SELECT * FROM computer WHERE id='" + i + "';");
+      return computerList;
+    } else {
+
+      ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
+      final List<BeanComputer> computerList = computerDAO.requeteUI(
+          "SELECT computer.id,computer.name,computer.introduced, computer.discontinued, company.name as company_name FROM computer LEFT OUTER JOIN company ON computer.company_id=company.id limit 11;");
       return computerList;
     }
+
   }
 
 

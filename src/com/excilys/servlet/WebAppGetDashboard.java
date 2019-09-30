@@ -19,12 +19,13 @@ public class WebAppGetDashboard extends HttpServlet {
 
     try {
       ComputerService computerService = ComputerService.getInstance();
-      List<BeanComputer> computerListTotal = computerService.getComputerList(0);
+      List<BeanComputer> computerListTotal = computerService.getComputerList(2);
+
       request.setAttribute("computerListTotal", computerListTotal);
+
     } catch (Exception e) {
       throw new ServletException(e);
     }
-
 
     ServletContext servletContext = this.getServletContext();
     RequestDispatcher requestDispacher =

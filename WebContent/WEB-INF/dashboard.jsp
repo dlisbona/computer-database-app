@@ -80,31 +80,25 @@
                     </tr>
                 </thead>
                 <!-- Browse attribute computers -->
+                
                 <tbody id="results">
+				
+				
+				<taglib:forEach items="${computerListTotal}" var="computer">
                     <tr>
                         <td class="editMode">
                             <input type="checkbox" name="cb" class="cb" value="0">
                         </td>
                         <td>
-                        <a href="editComputer.html" onclick=""> <taglib:out value="${computerListTotal.get(0).getName()}"/></a>
+                            <a href="editComputer.html" onclick="">${computer.getName()}</a>
                         </td>
-                        <td>2006-01-10</td>
-                        <td></td>
-                        <td>Apple Inc.</td>
+                        <td>${computer.getIntroduced()}</td>
+                        <td>${computer.getDiscontinued()}</td>
+                        <td>${computer.getCompanyName()}</td>
 
                     </tr>
-                    <tr>
-                        <td class="editMode">
-                            <input type="checkbox" name="cb" class="cb" value="0">
-                        </td>
-                        <td>
-                            <a href="editComputer.html" onclick="">Connection Machine</a>
-                        </td>
-                        <td>1987-01-01</td>
-                        <td></td>
-                        <td>Thinking Machines</td>
-
-                    </tr>
+                    </taglib:forEach>
+                    
                     <tr>
                         <td class="editMode">
                             <input type="checkbox" name="cb" class="cb" value="0">

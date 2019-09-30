@@ -44,7 +44,7 @@ public class UserInterface {
 
     switch (Mapper.mapperSwitchEnum(myInput.nextInt())) {
 
-      case computerList: 
+      case computerList:
 
         List<BeanComputer> computerListTotal = computerService.getComputerList(0);
 

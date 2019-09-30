@@ -27,7 +27,6 @@ public class ComputerDAO {
   }
 
 
-
   public List<BeanComputer> requete(String requeteSQL) {
     computers = new ArrayList<BeanComputer>();
     try {
@@ -55,6 +54,34 @@ public class ComputerDAO {
     }
     return computers;
   }
+
+  public List<BeanComputer> requeteUI(String requeteSQL) {
+    computers = new ArrayList<BeanComputer>();
+    try {
+      statement = ConnectionMySQL.getInstanceConnection().getConnection().createStatement();
+      result = statement.executeQuery(requeteSQL);
+
+      while (result.next()) {
+        final int id;
+        final String name;
+        final Timestamp introduced;
+        final Timestamp discontinued;
+        final String companyName;
+
+        id = result.getInt("id");
+        name = result.getString("name");
+        introduced = result.getTimestamp("introduced");
+        discontinued = result.getTimestamp("discontinued");
+        companyName = result.getString("company_name");
+        BeanComputer computer = new BeanComputer(id, name, introduced, discontinued, companyName);
+        computers.add(computer);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return computers;
+  }
+
 
   public void insert(BeanComputer computerBean) {
     String sql =
