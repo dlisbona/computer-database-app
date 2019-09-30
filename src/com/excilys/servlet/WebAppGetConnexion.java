@@ -21,10 +21,11 @@ public class WebAppGetConnexion extends HttpServlet {
     beanComputer.setName(param);
     beanComputer.setCompany_id(8);
 
+
     ServletContext servletContext = this.getServletContext();
     RequestDispatcher requestDispacher =
         servletContext.getRequestDispatcher("/WEB-INF/connexion.jsp");
-    request.setAttribute("test", beanComputer);
+    request.setAttribute("connexion", beanComputer);
     requestDispacher.forward(request, response);
   }
 }

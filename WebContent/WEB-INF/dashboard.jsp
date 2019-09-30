@@ -1,6 +1,12 @@
 <!DOCTYPE html>
+
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="taglib" %>
+
 <html>
 <head>
+
+
 <title>Computer Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
@@ -80,7 +86,7 @@
                             <input type="checkbox" name="cb" class="cb" value="0">
                         </td>
                         <td>
-                            <a href="editComputer.html" onclick="">MacBook Pro</a>
+                        <a href="editComputer.html" onclick=""> <taglib:out value="${computerListTotal.get(0).getName()}"/></a>
                         </td>
                         <td>2006-01-10</td>
                         <td></td>

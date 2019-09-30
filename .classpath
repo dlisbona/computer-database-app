@@ -16,5 +16,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/excilys/Téléchargements/pager-taglib-2.0.jar"/>
+	<classpathentry kind="lib" path="/home/excilys/Téléchargements/jstl-1.2(1).jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
