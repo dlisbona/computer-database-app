@@ -10,5 +10,7 @@
     <body>
         <p>Ceci est une page générée depuis une JSP.</p>
         <% String attribut = (String) request.getAttribute("test"); out.println( attribut ); %>
+        
     </body>
+    
 </html>

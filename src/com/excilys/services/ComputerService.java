@@ -24,9 +24,10 @@ public class ComputerService {
 
   final ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
 
-  public List<BeanComputer> getComputerList(int i) throws SQLException {
+  public List<BeanComputer> getComputerList(int choix, int ordinateur, int pages)
+      throws SQLException {
 
-    if (i == 0) {
+    if (choix == 0) {
 
       // List<BeanComputer> computerList = computerDAO.requete("SELECT * FROM computer");
       // return computerList;
@@ -36,16 +37,23 @@ public class ComputerService {
 
 
 
-    } else if (i == 1) {
+    } else if (choix == 1) {
       ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
       final List<BeanComputer> computerList =
-          computerDAO.requete("SELECT * FROM computer WHERE id='" + i + "';");
+          computerDAO.requete("SELECT * FROM computer WHERE id='" + ordinateur + "';");
       return computerList;
     } else {
 
       ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
       final List<BeanComputer> computerList = computerDAO.requeteUI(
-          "SELECT computer.id,computer.name,computer.introduced, computer.discontinued, company.name as company_name FROM computer LEFT OUTER JOIN company ON computer.company_id=company.id limit 11;");
+          "SELECT computer.id,computer.name,computer.introduced, computer.discontinued,company.name as company_name "
+              + "FROM computer " + "LEFT OUTER JOIN company ON computer.company_id=company.id "
+              + "limit " + pages + "," + (pages + 10) + ";");
+
+
+      // "SELECT computer.id,computer.name,computer.introduced, computer.discontinued, company.name
+      // as company_name FROM computer LEFT OUTER JOIN company ON computer.company_id=company.id;");
+
       return computerList;
     }
 
