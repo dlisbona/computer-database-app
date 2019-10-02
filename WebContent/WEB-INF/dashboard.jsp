@@ -25,7 +25,8 @@
     <section id="main">
         <div class="container">
             <h1 id="homeTitle">
-                121 Computers found
+            <taglib:out value="${computerListTotalLenght}"></taglib:out>
+            <a > Ordinateurs </a>
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
@@ -85,20 +86,22 @@
 				
 				
 				<taglib:forEach items="${computerListTotal}" var="computer">
+                   
                     <tr>
                         <td class="editMode">
-                            <input type="checkbox" name="cb" class="cb" value="0">
+                            <input type="checkbox" name="cb" class="cb" value="${computer.getId()}">
                         </td>
                         <td>
                             <a href="editComputer.html" onclick="">${computer.getName()}</a>
                         </td>
     
-                   <td>${computer.getIntroduced()}</td>
+                        <td>${computer.getIntroduced()}</td>
                         <td>${computer.getDiscontinued()}</td>
                         <td>${computer.getCompanyName()}</td>
 
                     </tr>
                     </taglib:forEach>
+                    
                     
                   
                     
@@ -106,14 +109,15 @@
             </table>
         </div>
     </section>
+    
 
-	
     <footer class="navbar-fixed-bottom">
- <% Object attribut = request.getAttribute("pageDirection"); out.println( attribut ); %>
+
         <div class="container text-center">
             <ul class="pagination">
                 <li>
-                    <a href="/Application-training//dashboard?page=previous" aria-label="Previous">
+                    <a href="/Application-training/dashboard?page=previous" aria-label="Previous">
+                     <taglib:remove var="computerListTotal" scope="session" />
                       <span aria-hidden="true">&laquo;</span>
                   </a>
                  

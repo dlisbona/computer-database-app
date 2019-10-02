@@ -1,7 +1,5 @@
 package com.excilys.model;
 
-
-// This class return a company with SQL compatibles attributes
 public class BeanCompany {
 
   public BeanCompany(Integer id, String name) {
@@ -29,7 +27,4 @@ public class BeanCompany {
   public void setName(String name) {
     this.name = name;
   }
-
-
-
 }

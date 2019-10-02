@@ -15,9 +15,12 @@ public class ComputerDAO {
   private ResultSet result;
   private static ComputerDAO instanceComputerDAO;
   private List<BeanComputer> computers;
-
+  private String deleteComputer = "DELETE FROM computer WHERE id=";
+  private String insertComputer =
+      "INSERT INTO computer(id,name,introduced,discontinued,company_id) VALUES(?,?,?,?,?)";
 
   private ComputerDAO() {}
+
 
   public static ComputerDAO getInstanceComputerDAO() {
     if (instanceComputerDAO == null) {
@@ -55,6 +58,7 @@ public class ComputerDAO {
     return computers;
   }
 
+
   public List<BeanComputer> requeteUI(String requeteSQL) {
     computers = new ArrayList<BeanComputer>();
     try {
@@ -67,7 +71,6 @@ public class ComputerDAO {
         final Timestamp introduced;
         final Timestamp discontinued;
         final String companyName;
-
         id = result.getInt("id");
         name = result.getString("name");
         introduced = result.getTimestamp("introduced");
@@ -84,13 +87,9 @@ public class ComputerDAO {
 
 
   public void insert(BeanComputer computerBean) {
-    String sql =
-        "INSERT INTO computer(id,name,introduced,discontinued,company_id) VALUES(?,?,?,?,?)";
-    System.out.println("intitialisation sql");
-    try (
-
-        PreparedStatement pstmt =
-            ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
+    String sql = insertComputer;
+    try (PreparedStatement pstmt =
+        ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
       pstmt.setDouble(1, computerBean.getId());
 
       pstmt.setString(2, computerBean.getName());
@@ -108,26 +107,24 @@ public class ComputerDAO {
     }
   }
 
+
+
   public void delete(int idDelete) {
-    String sql = "DELETE FROM computer WHERE id=" + idDelete;
+    String sql = deleteComputer + idDelete;
     System.out.println("intitialisation sql");
     try (
 
         PreparedStatement pstmt =
-            ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)
-
-    ) {
+            ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
       pstmt.executeUpdate();
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
   }
 
-  public void updateComputer(String sql) {
-    System.out.println("update in");
-    System.out.println(sql);
 
-    System.out.println("intitialisation sql");
+
+  public void updateComputer(String sql) {
     try (PreparedStatement pstmt =
         ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
       pstmt.executeUpdate();
@@ -137,7 +134,6 @@ public class ComputerDAO {
       e.printStackTrace();
     }
   }
-
 
 }
 

@@ -3,18 +3,19 @@ package com.excilys.UI;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import com.excilys.DTO.ComputerDTO;
 import com.excilys.mapper.Mapper;
 import com.excilys.model.BeanCompany;
-import com.excilys.model.BeanComputer;
 import com.excilys.services.CompanyService;
 import com.excilys.services.ComputerService;
+import com.excilys.services.Verification;
 
-public class UserInterface {
+public class UserInterface extends Verification {
   private static ComputerService computerService = ComputerService.getInstance();
   private static boolean choiceExit;
   private static int fieldUpdate;
 
-  public static void setChoiceExit(boolean choice) {
+  public void setChoiceExit(boolean choice) {
     choiceExit = choice;
   }
 
@@ -24,7 +25,6 @@ public class UserInterface {
 
 
   public static void main(String[] args) throws SQLException {
-
     System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
     System.out.println("|                                |");
     System.out.println("|        INSERT SELECTION        |");
@@ -37,29 +37,25 @@ public class UserInterface {
     System.out.println("|       6 = Update computer      |");
     System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
     System.out.println();
-
-
-
     Scanner myInput = new Scanner(System.in);
+
+
 
     switch (Mapper.mapperSwitchEnum(myInput.nextInt())) {
 
+
+
       case computerList:
 
-        List<BeanComputer> computerListTotal = computerService.getComputerList(0);
-
-
+        List<ComputerDTO> computerListTotal = computerService.getComputerList("listeEntiere", 0, 0);
         char reponse = 'O';
         int incremente = 0;
 
         while (reponse == 'O') {
-
-          List<BeanComputer> computerList;
+          List<ComputerDTO> computerList;
           computerList = Pagination.getPages(computerListTotal, incremente);
-
           System.out.print("incremente " + incremente);
           System.out.print("liste " + computerList.size());
-
           System.out.println();
           System.out.println(
               "-------------------------------------------------------------------------------------------------------------------------------------------");
@@ -75,20 +71,19 @@ public class UserInterface {
                 computerList.get(i).getDiscontinued(), computerList.get(i).getCompany_id());
             System.out.println();
           }
-
           System.out.println("Voulez-vous passer à la page suivante ? (O/N)");
           reponse = myInput.next().charAt(0);
           incremente = incremente + 10;
         }
-
         myInput.close();
         break;
+
+
 
       case companyList:
 
         myInput.close();
         List<BeanCompany> company = CompanyService.getCompanyList();
-
         System.out.println();
         System.out.println(
             "--------------------------------------------------------------------------------------------------------------------------------------------------");
@@ -104,6 +99,8 @@ public class UserInterface {
 
         break;
 
+
+
       case computerDetail:
 
         System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
@@ -111,13 +108,10 @@ public class UserInterface {
         System.out.println("|       INSERT COMPUTER ID       |");
         System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
         System.out.println();
-
         int selectionId = myInput.nextInt();
-        List<BeanComputer> computerDetail = computerService.getComputerList(selectionId);
+        List<ComputerDTO> computerDetail =
+            computerService.getComputerList("unComputer", selectionId, 0);
         myInput.close();
-
-
-
         System.out.println();
         System.out.println(
             "-------------------------------------------------------------------------------------------------------------------------------------------");
@@ -126,8 +120,6 @@ public class UserInterface {
         System.out.println();
         System.out.println(
             "-------------------------------------------------------------------------------------------------------------------------------------------");
-
-
         for (int i = 0; i < computerDetail.size(); i++) {
           System.out.format("%5s %70s %23s %23s %13s", computerDetail.get(i).getId(),
               computerDetail.get(i).getName(), computerDetail.get(i).getIntroduced(),
@@ -137,30 +129,34 @@ public class UserInterface {
         break;
 
 
+
       case insertComputer:
 
-        myInput.close();
-        System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
-        System.out.println("|                                |");
-        System.out.println("|     INSERT NEW NAME            |");
-        System.out.println("|                                |");
-        String newComputerName = myInput.next();
+        LOOP: for (int etapes = 0; etapes < 3; etapes++) {
+          System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
+          System.out.println("|                                |");
+          System.out.println("|     INSERT NEW NAME            |");
+          System.out.println("|                                |");
+          String newComputerName = myInput.next();
 
-        System.out.println("|     INSERT NEW          ID     |");
-        int newComputerId = myInput.nextInt();
+          if (verificationContenuNom(newComputerName) == false)
+            continue LOOP;
 
-        System.out.println("|     INTRODUCTION DATE 1        |");
+          System.out.println("|     INTRODUCTION DATE 1        |");
+          String newIntroductionDate1 = myInput.next();
+          System.out.println("|     END DATE 1                 |");
+          String newEndDate1 = myInput.next();
 
-        String newIntroductionDate1 = myInput.next();
-        System.out.println("|     END DATE 1                 |");
+          if (verificationConcordanceDates(newIntroductionDate1, newEndDate1) == false)
+            continue LOOP;
 
-        String newEndDate1 = myInput.next();
-
-        System.out.println("|     COMPANY ID                 |");
-        int newCompanyId = myInput.nextInt();
-
-        computerService.addComputer(newComputerId, newComputerName, newIntroductionDate1,
-            newEndDate1, newCompanyId);
+          System.out.println("|     COMPANY ID                 |");
+          int newCompanyId = myInput.nextInt();
+          int newComputerId = computerService.getComputerList("listeEntiere", 0, 0).size() + 1;
+          computerService.addComputer(newComputerId, newComputerName, newIntroductionDate1,
+              newEndDate1, newCompanyId);
+          myInput.close();
+        }
 
         break;
 
@@ -172,14 +168,13 @@ public class UserInterface {
         System.out.println("|       INSERT COMPUTER ID       |");
         System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
         System.out.println();
-
         int selectionIdDelete = myInput.nextInt();
         computerService.deleteComputer(selectionIdDelete);
         myInput.close();
         break;
 
-
       case updateComputer:
+
         System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
         System.out.println("|                                |");
         System.out.println("|       INSERT COMPUTER ID       |");
@@ -188,7 +183,6 @@ public class UserInterface {
 
         int selectionIdUpdate = myInput.nextInt();
         while (choiceExit != true) {
-
           System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
           System.out.println("|                                |");
           System.out.println("|     CHOOSE FIELD TO UPDATE     |");
@@ -212,8 +206,6 @@ public class UserInterface {
             System.out.println("|       INSERT NEW VALUE         |");
             System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
             System.out.println();
-
-
             String valueUpdate = myInput.next();
             ComputerService computerService = ComputerService.getInstance();
             computerService.updateComputer(selectionIdUpdate, valueUpdate, fieldUpdate);

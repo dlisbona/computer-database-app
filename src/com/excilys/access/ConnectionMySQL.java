@@ -4,9 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
 public class ConnectionMySQL {
-
 
   private String url = "jdbc:mysql://localhost:3306/computer-database-db";
   private String user = "admincdb";

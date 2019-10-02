@@ -1,7 +1,7 @@
 package com.excilys.services;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.UI.UserInterface;
@@ -11,6 +11,9 @@ import com.excilys.model.BeanComputer;
 
 public class ComputerService {
   private static ComputerService instanceComputerService;
+  private String computerJoinCompany =
+      "SELECT computer.id,computer.name,computer.introduced, computer.discontinued,company.name as company_name "
+          + "FROM computer " + "LEFT OUTER JOIN company ON computer.company_id=company.id limit ";
 
   private ComputerService() {}
 
@@ -21,43 +24,60 @@ public class ComputerService {
     return instanceComputerService;
   }
 
-
   final ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
 
-  public List<BeanComputer> getComputerList(int choix, int ordinateur, int pages)
-      throws SQLException {
+  List<ComputerDTO> computerDTOList = new ArrayList<ComputerDTO>();
+  List<BeanComputer> computerList = new ArrayList<BeanComputer>();
 
-    if (choix == 0) {
+  List<ComputerDTO> computerDTOListSeul = new ArrayList<ComputerDTO>();
+  List<BeanComputer> computerListSeul = new ArrayList<BeanComputer>();
 
-      // List<BeanComputer> computerList = computerDAO.requete("SELECT * FROM computer");
-      // return computerList;
-      //
-      List<BeanComputer> computerList = computerDAO.requete("SELECT * FROM computer");
-      return computerList;
+  List<ComputerDTO> computerDTOListPage = new ArrayList<ComputerDTO>();
+  List<BeanComputer> computerListPage = new ArrayList<BeanComputer>();
 
 
 
-    } else if (choix == 1) {
-      ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
-      final List<BeanComputer> computerList =
-          computerDAO.requete("SELECT * FROM computer WHERE id='" + ordinateur + "';");
-      return computerList;
-    } else {
+  public List<ComputerDTO> getComputerList(String choix, int ordinateur, int pages) {
+    switch (choix) {
+      case "listeEntiere":
+        computerList.clear();
+        computerList = computerDAO.requete("SELECT * FROM computer");
+        for (BeanComputer computer : computerList) {
+          ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
+          computerDTOList.add(computerDTO);
+        }
+        return computerDTOList;
 
-      ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
-      final List<BeanComputer> computerList = computerDAO.requeteUI(
-          "SELECT computer.id,computer.name,computer.introduced, computer.discontinued,company.name as company_name "
-              + "FROM computer " + "LEFT OUTER JOIN company ON computer.company_id=company.id "
-              + "limit " + pages + "," + (pages + 10) + ";");
+      case "unComputer":
+        computerListSeul.clear();
+        computerListSeul =
+            computerDAO.requete("SELECT * FROM computer WHERE id='" + ordinateur + "';");
+        for (BeanComputer computer : computerListSeul) {
+          ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
+          computerDTOListSeul.add(computerDTO);
+        }
+        return computerDTOListSeul;
+
+      case "listePagination":
+
+        computerListPage.clear();
+        computerListPage = computerDAO.requeteUI(computerJoinCompany + pages + ", 7 ;");
+        computerDTOList.clear();
+        for (BeanComputer computer : computerListPage) {
+          ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
+          computerDTOListPage.add(computerDTO);
+        }
+        return computerDTOListPage;
 
 
-      // "SELECT computer.id,computer.name,computer.introduced, computer.discontinued, company.name
-      // as company_name FROM computer LEFT OUTER JOIN company ON computer.company_id=company.id;");
+      default:
+        return computerDTOList;
 
-      return computerList;
     }
 
+
   }
+
 
 
   public void addComputer(int id, String name, String beginDate, String endDate, int idCompany) {
@@ -67,27 +87,25 @@ public class ComputerService {
     final BeanComputer computerBean = Mapper.computerDTOToComputerBean(computerDTO);
 
     computerDAO.insert(computerBean);
-
   }
 
+
+
   public void deleteComputer(int i) {
-
     computerDAO.delete(i);
-
   }
 
   public void updateComputer(int selectionIdUpdate, String valueUpdate, int selectionMenu) {
     switch (Mapper.mapperSwitchUpdate(selectionMenu)) {
-      case updateComputerName:
 
+      case updateComputerName:
         String valueUpdateName = (String) valueUpdate;
         String sql =
             "UPDATE computer SET name='" + valueUpdateName + "' WHERE id=" + selectionIdUpdate;
         computerDAO.updateComputer(sql);
         break;
+
       case updateComputerId:
-
-
         int valueUpdateId = Integer.parseInt(valueUpdate);
         sql = "UPDATE computer SET name = '" + valueUpdateId + "' WHERE id = " + selectionIdUpdate;
         computerDAO.updateComputer(sql);
@@ -98,7 +116,7 @@ public class ComputerService {
         valueUpdate = valueUpdate + "T00:00:00";
 
         Timestamp valueUpdateIntroduced =
-            Mapper.localToTime(Mapper.stringToLocalDateTime(valueUpdate));
+            Mapper.localDateTimeToTimeStamp(Mapper.stringToLocalDateTime(valueUpdate));
 
         sql = "UPDATE computer SET introduced='" + valueUpdateIntroduced + "' WHERE id="
             + selectionIdUpdate;
@@ -110,7 +128,7 @@ public class ComputerService {
         valueUpdate = valueUpdate + "T00:00:00";
 
         Timestamp valueUpdateDiscontinued =
-            Mapper.localToTime(Mapper.stringToLocalDateTime(valueUpdate));
+            Mapper.localDateTimeToTimeStamp(Mapper.stringToLocalDateTime(valueUpdate));
 
         sql = "UPDATE computer SET discontinued='" + valueUpdateDiscontinued + "'WHERE id="
             + selectionIdUpdate;

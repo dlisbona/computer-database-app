@@ -5,15 +5,16 @@ import java.time.LocalDateTime;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.model.BeanComputer;
 
-
 public class Mapper {
 
   public static LocalDateTime stringToLocalDateTime(String i) {
-    final LocalDateTime mapped = LocalDateTime.parse(i);
-    return mapped;
+    String date = i + "T00:00:00";
+    final LocalDateTime stringToLocalDateTime = LocalDateTime.parse(date);
+    return stringToLocalDateTime;
   }
 
-  public static Timestamp localToTime(LocalDateTime i) {
+
+  public static Timestamp localDateTimeToTimeStamp(LocalDateTime i) {
     final Timestamp mapped = Timestamp.valueOf(i);
     return mapped;
   }
@@ -25,9 +26,17 @@ public class Mapper {
   }
 
 
-  private static String timeToSring(Timestamp i) {
-    final String mapped = String.valueOf(i);
-    return mapped;
+  private static String timeStampToSring(Timestamp i) {
+    if (i != null) {
+      String timeStampToString = String.valueOf(i);
+      timeStampToString = timeStampToString.replace("00:00:00.0", " ");
+
+      return timeStampToString;
+    } else {
+      String timeStampToStringNull = "_";
+      return timeStampToStringNull;
+    }
+
   }
 
   public static BeanComputer computerDTOToComputerBean(ComputerDTO computerDTO) {
@@ -35,8 +44,8 @@ public class Mapper {
     String name = computerDTO.getName();
     Timestamp introduced = stringToTime(computerDTO.getIntroduced());
     Timestamp discontinued = stringToTime(computerDTO.getDiscontinued());
-    int company_id = computerDTO.getCompany_id();
-    BeanComputer computerBean = new BeanComputer(id, name, introduced, discontinued, company_id);
+    String companyName = computerDTO.getCompanyName();
+    BeanComputer computerBean = new BeanComputer(id, name, introduced, discontinued, companyName);
 
     return computerBean;
 
@@ -46,13 +55,11 @@ public class Mapper {
 
     int id = computerBean.getId();
     String name = computerBean.getName();
-    String introduced = timeToSring(computerBean.getIntroduced());
-    String discontinued = timeToSring(computerBean.getDiscontinued());
+    String introduced = timeStampToSring(computerBean.getIntroduced());
+    String discontinued = timeStampToSring(computerBean.getDiscontinued());
+    String companyName = computerBean.getCompanyName();
+    ComputerDTO computerDTO = new ComputerDTO(id, name, introduced, discontinued, companyName);
 
-    int company_id = computerBean.getCompany_id();
-
-    ComputerDTO computerDTO = new ComputerDTO(id, name, introduced, discontinued, company_id);
-    System.out.println("conversion ok");
     return computerDTO;
 
   }

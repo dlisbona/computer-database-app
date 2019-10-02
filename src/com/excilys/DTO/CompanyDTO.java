@@ -1,6 +1,5 @@
 package com.excilys.DTO;
 
-// This class return a company with java compatible attributes
 
 public class CompanyDTO {
 
