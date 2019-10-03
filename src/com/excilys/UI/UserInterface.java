@@ -66,9 +66,9 @@ public class UserInterface extends Verification {
               "-------------------------------------------------------------------------------------------------------------------------------------------");
           for (int i = 0; i < computerList.size(); i++) {
 
-            System.out.format("%5s %70s %23s %23s %13s", computerList.get(i).getId(),
-                computerList.get(i).getName(), computerList.get(i).getIntroduced(),
-                computerList.get(i).getDiscontinued(), computerList.get(i).getCompany_id());
+            System.out.format("%5s %70s %23s %23s %13s", computerList.get(i).getName(),
+                computerList.get(i).getIntroduced(), computerList.get(i).getDiscontinued(),
+                computerList.get(i).getCompany_id());
             System.out.println();
           }
           System.out.println("Voulez-vous passer à la page suivante ? (O/N)");
@@ -121,9 +121,9 @@ public class UserInterface extends Verification {
         System.out.println(
             "-------------------------------------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < computerDetail.size(); i++) {
-          System.out.format("%5s %70s %23s %23s %13s", computerDetail.get(i).getId(),
-              computerDetail.get(i).getName(), computerDetail.get(i).getIntroduced(),
-              computerDetail.get(i).getDiscontinued(), computerDetail.get(i).getCompany_id());
+          System.out.format("%5s %70s %23s %23s %13s", computerDetail.get(i).getName(),
+              computerDetail.get(i).getIntroduced(), computerDetail.get(i).getDiscontinued(),
+              computerDetail.get(i).getCompany_id());
           System.out.println();
         }
         break;
@@ -132,7 +132,7 @@ public class UserInterface extends Verification {
 
       case insertComputer:
 
-        LOOP: for (int etapes = 0; etapes < 3; etapes++) {
+        LOOP: for (int etapes = 0; etapes < 1; etapes++) {
           System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
           System.out.println("|                                |");
           System.out.println("|     INSERT NEW NAME            |");
@@ -142,20 +142,21 @@ public class UserInterface extends Verification {
           if (verificationContenuNom(newComputerName) == false)
             continue LOOP;
 
-          System.out.println("|     INTRODUCTION DATE 1        |");
+          System.out.println("|        INTRODUCTION DATE 1     |");
           String newIntroductionDate1 = myInput.next();
-          System.out.println("|     END DATE 1                 |");
+
+          System.out.println("|           END DATE 1           |");
           String newEndDate1 = myInput.next();
+
 
           if (verificationConcordanceDates(newIntroductionDate1, newEndDate1) == false)
             continue LOOP;
 
-          System.out.println("|     COMPANY ID                 |");
+          System.out.println("|            COMPANY ID          |");
           int newCompanyId = myInput.nextInt();
-          int newComputerId = computerService.getComputerList("listeEntiere", 0, 0).size() + 1;
-          computerService.addComputer(newComputerId, newComputerName, newIntroductionDate1,
-              newEndDate1, newCompanyId);
-          myInput.close();
+
+          computerService.addComputer(newComputerName, newIntroductionDate1, newEndDate1,
+              newCompanyId);
         }
 
         break;

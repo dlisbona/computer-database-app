@@ -61,7 +61,9 @@ public class ComputerService {
       case "listePagination":
 
         computerListPage.clear();
-        computerListPage = computerDAO.requeteUI(computerJoinCompany + pages + ", 7 ;");
+        computerListPage = computerDAO.requeteUI(computerJoinCompany + pages + ", 9 ;");
+
+
         computerDTOList.clear();
         for (BeanComputer computer : computerListPage) {
           ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
@@ -80,9 +82,9 @@ public class ComputerService {
 
 
 
-  public void addComputer(int id, String name, String beginDate, String endDate, int idCompany) {
+  public void addComputer(String name, String beginDate, String endDate, int idCompany) {
 
-    final ComputerDTO computerDTO = new ComputerDTO(id, name, beginDate, endDate, idCompany);
+    final ComputerDTO computerDTO = new ComputerDTO(name, beginDate, endDate, idCompany);
 
     final BeanComputer computerBean = Mapper.computerDTOToComputerBean(computerDTO);
 

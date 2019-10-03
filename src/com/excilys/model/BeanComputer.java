@@ -6,27 +6,23 @@ import java.sql.Timestamp;
 
 public class BeanComputer {
 
-  public BeanComputer(int id, String name, Timestamp introduced, Timestamp discontinued,
-      int companyID) {
+  public BeanComputer(String name, Timestamp introduced, Timestamp discontinued, int companyID) {
     super();
-    this.id = id;
     this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;
     this.companyID = companyID;
   }
 
-  public BeanComputer(int id, String name, Timestamp introduced, Timestamp discontinued,
+  public BeanComputer(String name, Timestamp introduced, Timestamp discontinued,
       String companyName) {
     super();
-    this.id = id;
     this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;
     this.companyName = companyName;
   }
 
-  private int id;
   private String name;
   private Timestamp introduced;
   private Timestamp discontinued;
@@ -35,14 +31,6 @@ public class BeanComputer {
   // pas d'underscore dans les noms de variables
   // Mieux vaut declarer directement un type company : private company companyId;
 
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
 
   public String getName() {
     return name;

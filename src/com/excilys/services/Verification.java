@@ -19,11 +19,12 @@ public class Verification {
       String dateDiscontinued)
 
   {
-    LocalDateTime introduced = Mapper.stringToLocalDateTime(dateDiscontinued);
+    LocalDateTime introduced = Mapper.stringToLocalDateTime(dateIntroduced);
     LocalDateTime discontinued = Mapper.stringToLocalDateTime(dateDiscontinued);
-
-    if (introduced.isBefore(discontinued))
+    if (introduced.isBefore(discontinued)) {
       return true;
-    return false;
+    } else {
+      return false;
+    }
   }
 }

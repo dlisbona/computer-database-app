@@ -3,40 +3,31 @@ package com.excilys.DTO;
 
 public class ComputerDTO {
 
-  public ComputerDTO(int id, String name, String introduced, String discontinued, int company_id) {
+  public ComputerDTO(String name, String introduced, String discontinued, int company_id) {
     super();
-    this.id = id;
     this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;
     this.company_id = company_id;
+    this.companyIdIsInt = true;
   }
 
-  public ComputerDTO(int id, String name, String introduced, String discontinued,
-      String companyName) {
+  public ComputerDTO(String name, String introduced, String discontinued, String companyName) {
     super();
-    this.id = id;
     this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;
     this.companyName = companyName;
+    this.companyIdIsInt = true;
   }
 
 
-  private int id;
   private String name;
   private String introduced;
   private String discontinued;
   private int company_id;
   private String companyName;
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
+  private boolean companyIdIsInt;
 
   public String getName() {
     return name;
@@ -76,6 +67,10 @@ public class ComputerDTO {
 
   public void setCompanyName(String companyName) {
     this.companyName = companyName;
+  }
+
+  public boolean getcompanyIdIsInt() {
+    return companyIdIsInt;
   }
 
 }

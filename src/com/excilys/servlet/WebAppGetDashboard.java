@@ -47,6 +47,7 @@ public class WebAppGetDashboard extends HttpServlet {
                 .getComputerList("listeEntiere", defaultReglage, defaultReglage).size();
             request.setAttribute("computerListTotalLenght", computerListTotalLenght);
             request.setAttribute("computerListTotal", computerListTotal);
+
             requestDispacher.forward(request, response);
             System.out.println(pagination);
             break;

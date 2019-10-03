@@ -17,7 +17,10 @@ public class ComputerDAO {
   private List<BeanComputer> computers;
   private String deleteComputer = "DELETE FROM computer WHERE id=";
   private String insertComputer =
-      "INSERT INTO computer(id,name,introduced,discontinued,company_id) VALUES(?,?,?,?,?)";
+      "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
+  private String updatePrimaryKey1 = "SET @count = 0";
+
+  private String updatePrimaryKey2 = "UPDATE computer SET computer.id = @count:= @count + 1";
 
   private ComputerDAO() {}
 
@@ -37,18 +40,16 @@ public class ComputerDAO {
       result = statement.executeQuery(requeteSQL);
 
       while (result.next()) {
-        final int id;
         final String name;
         final Timestamp introduced;
         final Timestamp discontinued;
         final int company_id;
 
-        id = result.getInt("id");
         name = result.getString("name");
         introduced = result.getTimestamp("introduced");
         discontinued = result.getTimestamp("discontinued");
         company_id = result.getInt("company_id");
-        BeanComputer computer = new BeanComputer(id, name, introduced, discontinued, company_id);
+        BeanComputer computer = new BeanComputer(name, introduced, discontinued, company_id);
         computers.add(computer);
 
       }
@@ -76,7 +77,7 @@ public class ComputerDAO {
         introduced = result.getTimestamp("introduced");
         discontinued = result.getTimestamp("discontinued");
         companyName = result.getString("company_name");
-        BeanComputer computer = new BeanComputer(id, name, introduced, discontinued, companyName);
+        BeanComputer computer = new BeanComputer(name, introduced, discontinued, companyName);
         computers.add(computer);
       }
     } catch (SQLException e) {
@@ -90,15 +91,14 @@ public class ComputerDAO {
     String sql = insertComputer;
     try (PreparedStatement pstmt =
         ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
-      pstmt.setDouble(1, computerBean.getId());
 
-      pstmt.setString(2, computerBean.getName());
+      pstmt.setString(1, computerBean.getName());
 
-      pstmt.setTimestamp(3, computerBean.getIntroduced());
+      pstmt.setTimestamp(2, computerBean.getIntroduced());
 
-      pstmt.setTimestamp(4, computerBean.getDiscontinued());
+      pstmt.setTimestamp(3, computerBean.getDiscontinued());
 
-      pstmt.setDouble(5, computerBean.getCompany_id());
+      pstmt.setDouble(4, computerBean.getCompany_id());
 
       pstmt.executeUpdate();
 
@@ -111,15 +111,35 @@ public class ComputerDAO {
 
   public void delete(int idDelete) {
     String sql = deleteComputer + idDelete;
-    System.out.println("intitialisation sql");
+
     try (
 
         PreparedStatement pstmt =
             ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
       pstmt.executeUpdate();
+
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+    try (
+
+        PreparedStatement pstmt = ConnectionMySQL.getInstanceConnection().getConnection()
+            .prepareStatement(updatePrimaryKey1)) {
+      pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+    try (
+
+        PreparedStatement pstmt = ConnectionMySQL.getInstanceConnection().getConnection()
+            .prepareStatement(updatePrimaryKey2)) {
+      pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+
   }
 
 
