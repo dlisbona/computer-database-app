@@ -72,12 +72,15 @@ public class ComputerDAO {
         final Timestamp introduced;
         final Timestamp discontinued;
         final String companyName;
-        id = result.getInt("id");
+        final int idComputer;
+
+        idComputer = result.getInt("id");
         name = result.getString("name");
         introduced = result.getTimestamp("introduced");
         discontinued = result.getTimestamp("discontinued");
         companyName = result.getString("company_name");
-        BeanComputer computer = new BeanComputer(name, introduced, discontinued, companyName);
+        BeanComputer computer =
+            new BeanComputer(idComputer, name, introduced, discontinued, companyName);
         computers.add(computer);
       }
     } catch (SQLException e) {

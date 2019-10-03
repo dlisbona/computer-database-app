@@ -21,7 +21,18 @@ public class ComputerDTO {
     this.companyIdIsInt = true;
   }
 
+  public ComputerDTO(int id, String name, String introduced, String discontinued,
+      String companyName) {
+    super();
+    this.company_id = id;
+    this.name = name;
+    this.introduced = introduced;
+    this.discontinued = discontinued;
+    this.companyName = companyName;
+    this.companyIdIsInt = true;
+  }
 
+  private int id;
   private String name;
   private String introduced;
   private String discontinued;
@@ -71,6 +82,14 @@ public class ComputerDTO {
 
   public boolean getcompanyIdIsInt() {
     return companyIdIsInt;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
 }

@@ -2,9 +2,8 @@ package com.excilys.model;
 
 import java.sql.Timestamp;
 
-// This class return a computer with SQL compatible attributes
-
 public class BeanComputer {
+
 
   public BeanComputer(String name, Timestamp introduced, Timestamp discontinued, int companyID) {
     super();
@@ -14,15 +13,19 @@ public class BeanComputer {
     this.companyID = companyID;
   }
 
-  public BeanComputer(String name, Timestamp introduced, Timestamp discontinued,
+
+  public BeanComputer(int id, String name, Timestamp introduced, Timestamp discontinued,
       String companyName) {
     super();
+    this.setId(id);
     this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;
     this.companyName = companyName;
   }
 
+
+  private int id;
   private String name;
   private Timestamp introduced;
   private Timestamp discontinued;
@@ -70,6 +73,14 @@ public class BeanComputer {
 
   public void setCompanyName(String companyName) {
     this.companyName = companyName;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
 }

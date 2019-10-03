@@ -40,11 +40,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="companyId">Company</label>
-                                <select class="form-control" id="companyComputerName" >
-                               
+                                <select class="form-control" id="companyComputerName" name="companyComputerName">
                                <option value="0">--</option>
                                 <taglib:forEach items="${companyNames}" var="company">
- 							    <option value="0">${company}</option>
+ 							    <option value="${company}">${company}</option>
                    				 </taglib:forEach>
                                   
                                   

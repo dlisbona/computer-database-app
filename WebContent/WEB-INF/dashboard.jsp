@@ -30,7 +30,7 @@
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="#" method="GET" class="form-inline">
+                    <form id="searchForm" action="#" method="GET" class="form-inline" >
 
                         <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" />
                         <input type="submit" id="searchsubmit" value="Filter by name"
@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <form id="deleteForm" action="#" method="POST">
+        <form id="deleteForm" action="#" method="POST" >
             <input type="hidden" name="selection" value="">
         </form>
 
@@ -89,7 +89,7 @@
                    
                     <tr>
                         <td class="editMode">
-                            <input type="checkbox" name="cb" class="cb" value="${computer.getId()}">
+                            <input type="checkbox" name="checkListComputers" class="cb" value="${computer.getId()}">
                         </td>
                         <td>
                             <a href="editComputer.html" onclick="">${computer.getName()}</a>
@@ -143,9 +143,9 @@
 <!--         </div> -->
 
     </footer>
-<script src="../js/jquery.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/dashboard.js"></script>
+<script src="/Application-training/front/javascript/jquery.min.js"></script>
+<script src="/Application-training/front/javascript/bootstrap.min.js"></script>
+<script src="/Application-training/front/javascript/dashboard.js"></script>
 
 </body>
 </html>

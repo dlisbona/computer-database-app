@@ -49,7 +49,6 @@ public class WebAppGetDashboard extends HttpServlet {
             request.setAttribute("computerListTotal", computerListTotal);
 
             requestDispacher.forward(request, response);
-            System.out.println(pagination);
             break;
 
           case "next":
@@ -67,7 +66,7 @@ public class WebAppGetDashboard extends HttpServlet {
           default:
             computerListTotal.clear();
             computerListTotal =
-                computerService.getComputerList("listePagination", defaultReglage, 0);
+                computerService.getComputerList("listePagination", defaultReglage, defaultReglage);
             computerListTotalLenght = computerService
                 .getComputerList("listeEntiere", defaultReglage, defaultReglage).size();
             request.setAttribute("computerListTotalLenght", computerListTotalLenght);
@@ -78,7 +77,8 @@ public class WebAppGetDashboard extends HttpServlet {
 
       } else {
         computerListTotal.clear();
-        computerListTotal = computerService.getComputerList("listePagination", defaultReglage, 0);
+        computerListTotal =
+            computerService.getComputerList("listePagination", defaultReglage, defaultReglage);
         computerListTotalLenght =
             computerService.getComputerList("listeEntiere", defaultReglage, defaultReglage).size();
         request.setAttribute("computerListTotalLenght", computerListTotalLenght);
@@ -91,9 +91,21 @@ public class WebAppGetDashboard extends HttpServlet {
     } catch (Exception e) {
       throw new ServletException(e);
     }
-
-
-
   }
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws IOException, ServletException {
+    try {
+      String[] valeurs = request.getParameterValues("selection");
+
+      for (int i = 0; i < valeurs.length; i++) {
+        System.out.println(valeurs[i] == null ? "pas coché" : "coché");
+      }
+
+    } catch (Exception e) {
+      throw new ServletException(e);
+    }
+  }
+
 }
 

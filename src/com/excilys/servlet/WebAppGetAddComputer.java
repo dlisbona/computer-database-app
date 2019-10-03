@@ -41,42 +41,25 @@ public class WebAppGetAddComputer extends HttpServlet {
 
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-    String listeEntiere = "listeEntiere";
-    int defaultReglage = 0;
-
     try {
-      ComputerService computerService = ComputerService.getInstance();
+
       ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
-
-
       String nameComputer = request.getParameter("nameComputer");
-      System.out.println(request.getParameter("nameComputer"));
       String introducedDateString = request.getParameter("introducedDate");
       String discontinuedDateString = request.getParameter("discontinuedDate");
-
-      System.out.println(request.getParameter("introducedDate"));
       Timestamp introducedTimestamp = Mapper.stringToTime(introducedDateString);
       Timestamp discontinuedTimestamp = Mapper.stringToTime(discontinuedDateString);
-
       String companyComputerName = request.getParameter("companyComputerName");
+
       List<String> companyNames = CompanyService.getCompanyListString();
       int companyComputerId = companyNames.indexOf(companyComputerName) + 1;
-
-      BeanComputer computerAdded = new BeanComputer(nameComputer, introducedTimestamp,
-          discontinuedTimestamp, companyComputerId);
-
-      computerDAO.insert(computerAdded);
-
-
+      BeanComputer computerToAdd = new BeanComputer(nameComputer, introducedTimestamp,
+      discontinuedTimestamp, companyComputerId);
+      computerDAO.insert(computerToAdd);
     } catch (SQLException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
     }
-
-
-
   }
-
-
-
 }
 
