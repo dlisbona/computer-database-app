@@ -18,9 +18,6 @@ public class ComputerDAO {
   private String deleteComputer = "DELETE FROM computer WHERE id=";
   private String insertComputer =
       "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
-  private String updatePrimaryKey1 = "SET @count = 0";
-
-  private String updatePrimaryKey2 = "UPDATE computer SET computer.id = @count:= @count + 1";
 
   private ComputerDAO() {}
 
@@ -40,16 +37,18 @@ public class ComputerDAO {
       result = statement.executeQuery(requeteSQL);
 
       while (result.next()) {
+        final int id;
         final String name;
         final Timestamp introduced;
         final Timestamp discontinued;
         final int company_id;
 
+        id = result.getInt("id");
         name = result.getString("name");
         introduced = result.getTimestamp("introduced");
         discontinued = result.getTimestamp("discontinued");
         company_id = result.getInt("company_id");
-        BeanComputer computer = new BeanComputer(name, introduced, discontinued, company_id);
+        BeanComputer computer = new BeanComputer(id, name, introduced, discontinued, company_id);
         computers.add(computer);
 
       }
@@ -67,12 +66,12 @@ public class ComputerDAO {
       result = statement.executeQuery(requeteSQL);
 
       while (result.next()) {
-        final int id;
+        final int idComputer;
         final String name;
         final Timestamp introduced;
         final Timestamp discontinued;
         final String companyName;
-        final int idComputer;
+
 
         idComputer = result.getInt("id");
         name = result.getString("name");
@@ -82,6 +81,7 @@ public class ComputerDAO {
         BeanComputer computer =
             new BeanComputer(idComputer, name, introduced, discontinued, companyName);
         computers.add(computer);
+
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -124,25 +124,6 @@ public class ComputerDAO {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
-    try (
-
-        PreparedStatement pstmt = ConnectionMySQL.getInstanceConnection().getConnection()
-            .prepareStatement(updatePrimaryKey1)) {
-      pstmt.executeUpdate();
-
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-    try (
-
-        PreparedStatement pstmt = ConnectionMySQL.getInstanceConnection().getConnection()
-            .prepareStatement(updatePrimaryKey2)) {
-      pstmt.executeUpdate();
-
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-
   }
 
 

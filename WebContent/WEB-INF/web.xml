@@ -1,67 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://java.sun.com/xml/ns/javaee"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-    version="3.0">
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
 
-    <servlet>
-        <servlet-name>WebAppGetEditComputer</servlet-name>
-        <servlet-class>com.excilys.servlet.WebAppGetEditComputer</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>WebAppGetEditComputer</servlet-name>
-        <url-pattern>/editcomputer</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>WebAppGetConnexion</servlet-name>
-        <servlet-class>com.excilys.servlet.WebAppGetConnexion</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>WebAppGetConnexion</servlet-name>
-        <url-pattern>/connexion</url-pattern>
-    </servlet-mapping>
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/WEB-INF/taglib.jsp</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
+	
+	
+	<servlet>
+		<servlet-name>WebAppGetEditComputer</servlet-name>
+		<servlet-class>com.excilys.servlet.WebAppGetEditComputer</servlet-class>
+	</servlet>
 
 
-   <servlet>
-        <servlet-name>WebAppGetAddComputer</servlet-name>
-        <servlet-class>com.excilys.servlet.WebAppGetAddComputer</servlet-class>
-    </servlet>
+	<servlet-mapping>
+		<servlet-name>WebAppGetEditComputer</servlet-name>
+		<url-pattern>/editcomputer</url-pattern>
+	</servlet-mapping>
 
-    <servlet-mapping>
-        <servlet-name>WebAppGetAddComputer</servlet-name>
-        <url-pattern>/addcomputer</url-pattern>
-    </servlet-mapping>
+	<servlet>
+		<servlet-name>WebAppGetConnexion</servlet-name>
+		<servlet-class>com.excilys.servlet.WebAppGetConnexion</servlet-class>
+	</servlet>
 
 
-   <servlet>
-        <servlet-name>WebAppGetDashboard</servlet-name>
-        <servlet-class>com.excilys.servlet.WebAppGetDashboard</servlet-class>
-    </servlet>
-    
-       <servlet-mapping>
-        <servlet-name>WebAppGetDashboard</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
-    </servlet-mapping>
-    
-    <error-page>
+
+	<servlet>
+		<servlet-name>WebAppGetAddComputer</servlet-name>
+		<servlet-class>com.excilys.servlet.WebAppGetAddComputer</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>WebAppGetAddComputer</servlet-name>
+		<url-pattern>/addcomputer</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>WebAppGetDashboard</servlet-name>
+		<servlet-class>com.excilys.servlet.WebAppGetDashboard</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>WebAppGetDashboard</servlet-name>
+		<url-pattern>/dashboard</url-pattern>
+	</servlet-mapping>
+
+	<error-page>
 		<error-code>403</error-code>
 		<location>/WEB-INF/403.jsp</location>
 	</error-page>
 
- <error-page>
+	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/404.jsp</location>
 	</error-page>
- <error-page>
+	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/500.jsp</location>
 	</error-page>
 
-     <session-config>
-    <session-timeout>15</session-timeout>
+	<session-config>
+		<session-timeout>15</session-timeout>
 	</session-config>
 
 </web-app>

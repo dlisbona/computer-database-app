@@ -40,6 +40,7 @@ public class Mapper {
   }
 
   public static BeanComputer computerDTOToComputerBean(ComputerDTO computerDTO) {
+
     int idComputer = computerDTO.getId();
     String name = computerDTO.getName();
     Timestamp introduced = stringToTime(computerDTO.getIntroduced());
@@ -47,7 +48,8 @@ public class Mapper {
 
     if (computerDTO.getcompanyIdIsInt() == true) {
       int companyName = computerDTO.getCompany_id();
-      BeanComputer computerBean = new BeanComputer(name, introduced, discontinued, companyName);
+      BeanComputer computerBean =
+          new BeanComputer(idComputer, name, introduced, discontinued, companyName);
       return computerBean;
     } else {
       String companyName = computerDTO.getCompanyName();
@@ -60,13 +62,13 @@ public class Mapper {
 
 
   public static ComputerDTO computerBeanToComputerDTO(BeanComputer computerBean) {
-
+    int id = computerBean.getId();
     String name = computerBean.getName();
     String introduced = timeStampToSring(computerBean.getIntroduced());
     String discontinued = timeStampToSring(computerBean.getDiscontinued());
 
     String companyName = computerBean.getCompanyName();
-    ComputerDTO computerDTO = new ComputerDTO(name, introduced, discontinued, companyName);
+    ComputerDTO computerDTO = new ComputerDTO(id, name, introduced, discontinued, companyName);
 
     return computerDTO;
 

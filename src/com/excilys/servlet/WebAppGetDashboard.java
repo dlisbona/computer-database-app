@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.excilys.DTO.ComputerDTO;
+import com.excilys.access.ComputerDAO;
 import com.excilys.services.ComputerService;
 
 
@@ -17,7 +18,6 @@ import com.excilys.services.ComputerService;
 public class WebAppGetDashboard extends HttpServlet {
   int pagination = 10;
   private int defaultReglage = 0;
-
   List<ComputerDTO> computerListTotal = new ArrayList<ComputerDTO>();
 
   public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,7 +39,8 @@ public class WebAppGetDashboard extends HttpServlet {
         switch (pageDirection) {
 
           case "previous":
-            pagination -= 10;
+            if (pagination > 0)
+              pagination -= 10;
             computerListTotal.clear();
             computerListTotal =
                 computerService.getComputerList("listePagination", defaultReglage, pagination);
@@ -52,18 +53,32 @@ public class WebAppGetDashboard extends HttpServlet {
             break;
 
           case "next":
-            pagination += 10;
+
             computerListTotal.clear();
             computerListTotal =
                 computerService.getComputerList("listePagination", defaultReglage, pagination);
             computerListTotalLenght = computerService
                 .getComputerList("listeEntiere", defaultReglage, defaultReglage).size();
+            int computerListTotalPagination = computerListTotalLenght;
+            if (computerListTotalPagination % 10 != 0) {
+              computerListTotalPagination =
+                  computerListTotalPagination - (computerListTotalPagination % 10);
+            } else {
+              computerListTotalPagination = computerListTotalPagination - 10;
+            }
+
+            if (pagination < computerListTotalPagination)
+              pagination += 10;
+
+            System.out.println(computerListTotalPagination);
+
             request.setAttribute("computerListTotalLenght", computerListTotalLenght);
             request.setAttribute("computerListTotal", computerListTotal);
             requestDispacher.forward(request, response);
             break;
 
           default:
+            pagination = 10;
             computerListTotal.clear();
             computerListTotal =
                 computerService.getComputerList("listePagination", defaultReglage, defaultReglage);
@@ -76,6 +91,7 @@ public class WebAppGetDashboard extends HttpServlet {
         }
 
       } else {
+        pagination = 10;
         computerListTotal.clear();
         computerListTotal =
             computerService.getComputerList("listePagination", defaultReglage, defaultReglage);
@@ -87,6 +103,9 @@ public class WebAppGetDashboard extends HttpServlet {
 
       }
 
+      System.out.println(pagination);
+
+
 
     } catch (Exception e) {
       throw new ServletException(e);
@@ -96,12 +115,20 @@ public class WebAppGetDashboard extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     try {
-      String[] valeurs = request.getParameterValues("selection");
 
-      for (int i = 0; i < valeurs.length; i++) {
-        System.out.println(valeurs[i] == null ? "pas coché" : "coché");
+
+
+      String[] idComputerCheckbox = request.getParameterValues("selection");
+      String[] idComputerParsed = idComputerCheckbox[0].split(",");
+      ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
+
+      for (String ordinateur : idComputerParsed) {
+
+        int idComputer = Integer.parseInt(ordinateur);
+        computerDAO.delete(idComputer);
+
       }
-
+      doGet(request, response);
     } catch (Exception e) {
       throw new ServletException(e);
     }

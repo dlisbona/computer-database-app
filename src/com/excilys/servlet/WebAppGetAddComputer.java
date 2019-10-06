@@ -16,7 +16,6 @@ import com.excilys.access.ComputerDAO;
 import com.excilys.mapper.Mapper;
 import com.excilys.model.BeanComputer;
 import com.excilys.services.CompanyService;
-import com.excilys.services.ComputerService;
 
 @SuppressWarnings("serial")
 public class WebAppGetAddComputer extends HttpServlet {
@@ -44,6 +43,7 @@ public class WebAppGetAddComputer extends HttpServlet {
     try {
 
       ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
+      int idComputer = 0;
       String nameComputer = request.getParameter("nameComputer");
       String introducedDateString = request.getParameter("introducedDate");
       String discontinuedDateString = request.getParameter("discontinuedDate");
@@ -52,10 +52,16 @@ public class WebAppGetAddComputer extends HttpServlet {
       String companyComputerName = request.getParameter("companyComputerName");
 
       List<String> companyNames = CompanyService.getCompanyListString();
-      int companyComputerId = companyNames.indexOf(companyComputerName) + 1;
-      BeanComputer computerToAdd = new BeanComputer(nameComputer, introducedTimestamp,
-      discontinuedTimestamp, companyComputerId);
+      int companyComputerId = companyNames.indexOf(companyComputerName) + 2;
+      System.out.println(companyComputerName);
+      System.out.println(companyComputerId);
+      BeanComputer computerToAdd = new BeanComputer(idComputer, nameComputer, introducedTimestamp,
+          discontinuedTimestamp, companyComputerId);
       computerDAO.insert(computerToAdd);
+      doGet(request, response);
+
+
+
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

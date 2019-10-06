@@ -155,7 +155,8 @@ public class UserInterface extends Verification {
           System.out.println("|            COMPANY ID          |");
           int newCompanyId = myInput.nextInt();
 
-          computerService.addComputer(newComputerName, newIntroductionDate1, newEndDate1,
+
+          computerService.addComputer(0, newComputerName, newIntroductionDate1, newEndDate1,
               newCompanyId);
         }
 

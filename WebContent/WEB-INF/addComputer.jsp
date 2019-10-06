@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-
-<%@ page pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="taglib" %>
-
 <html>
 <head>
 <title>Computer Database</title>

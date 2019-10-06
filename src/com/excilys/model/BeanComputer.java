@@ -5,8 +5,10 @@ import java.sql.Timestamp;
 public class BeanComputer {
 
 
-  public BeanComputer(String name, Timestamp introduced, Timestamp discontinued, int companyID) {
+  public BeanComputer(int id, String name, Timestamp introduced, Timestamp discontinued,
+      int companyID) {
     super();
+    this.id = id;
     this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;
@@ -17,7 +19,7 @@ public class BeanComputer {
   public BeanComputer(int id, String name, Timestamp introduced, Timestamp discontinued,
       String companyName) {
     super();
-    this.setId(id);
+    this.id = id;
     this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;

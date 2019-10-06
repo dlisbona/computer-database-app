@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 
-<%@ page pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="taglib" %>
-
 <html>
 <head>
 
@@ -33,7 +30,9 @@
                     <form id="searchForm" action="#" method="GET" class="form-inline" >
 
                         <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" />
+                       
                         <input type="submit" id="searchsubmit" value="Filter by name"
+                        
                         class="btn btn-primary" />
                     </form>
                 </div>
@@ -43,10 +42,11 @@
                 </div>
             </div>
         </div>
-
+        
         <form id="deleteForm" action="#" method="POST" >
             <input type="hidden" name="selection" value="">
         </form>
+        
 
         <div class="container" style="margin-top: 10px;">
             <table class="table table-striped table-bordered" pagesize="3">
@@ -89,16 +89,16 @@
                    
                     <tr>
                         <td class="editMode">
-                            <input type="checkbox" name="checkListComputers" class="cb" value="${computer.getId()}">
+                            <input type="checkbox" name="cb" class="cb" value="${computer.getId()}">
                         </td>
                         <td>
                             <a href="editComputer.html" onclick="">${computer.getName()}</a>
                         </td>
-    
+    					
                         <td>${computer.getIntroduced()}</td>
                         <td>${computer.getDiscontinued()}</td>
                         <td>${computer.getCompanyName()}</td>
-
+						<td>${computer.getId()}</td>
                     </tr>
                     </taglib:forEach>
                     
@@ -129,18 +129,17 @@
 <!--               <li><a href="#">5</a></li> -->
 <!--               <li> -->
 										
-					
-                <a href="/Application-training/dashboard?page=next" aria-label="Next">
+ 					<a href="/Application-training/dashboard?page=next" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         </ul>
 
-<!--         <div class="btn-group btn-group-sm pull-right" role="group" > -->
-<!--             <button type="button" class="btn btn-default">10</button> -->
-<!--             <button type="button" class="btn btn-default">50</button> -->
-<!--             <button type="button" class="btn btn-default">100</button> -->
-<!--         </div> -->
+        <div class="btn-group btn-group-sm pull-right" role="group" >
+            <button type="button" class="btn btn-default">10</button>
+            <button type="button" class="btn btn-default">50</button>
+            <button type="button" class="btn btn-default">100</button>
+        </div>
 
     </footer>
 <script src="/Application-training/front/javascript/jquery.min.js"></script>

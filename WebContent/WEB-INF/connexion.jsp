@@ -1,6 +1,3 @@
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,9 +5,16 @@
     </head>
 
     <body>
-        <p>Ceci est une page gÃ©nÃ©rÃ©e depuis une JSP.</p>
-        <% String attribut = (String) request.getAttribute("test"); out.println( attribut ); %>
+    
+        <p>Ceci est une page générée depuis une JSP.</p>
+         <p>Attribute que dis-tu ? ${ empty test ? 'rien à dire' : test }</p>
+       
         
+         <taglib:set var="pseudo" value="Mathieu" />
+         
+		<p><taglib:out value="${auteur}" /></p>
+		
     </body>
     
 </html>
+         
