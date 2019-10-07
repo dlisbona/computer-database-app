@@ -103,14 +103,18 @@ public class UserInterface extends Verification {
 
       case computerDetail:
 
-        System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ");
+        System.out.println(" _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _  ");
         System.out.println("|                                |");
         System.out.println("|       INSERT COMPUTER ID       |");
         System.out.println("|_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ |");
         System.out.println();
         int selectionId = myInput.nextInt();
+
         List<ComputerDTO> computerDetail =
             computerService.getComputerList("unComputer", selectionId, 0);
+
+
+
         myInput.close();
         System.out.println();
         System.out.println(
@@ -121,9 +125,9 @@ public class UserInterface extends Verification {
         System.out.println(
             "-------------------------------------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < computerDetail.size(); i++) {
-          System.out.format("%5s %70s %23s %23s %13s", computerDetail.get(i).getName(),
-              computerDetail.get(i).getIntroduced(), computerDetail.get(i).getDiscontinued(),
-              computerDetail.get(i).getCompany_id());
+          System.out.format("%5s %70s %23s %23s %13s", computerDetail.get(i).getId(),
+              computerDetail.get(i).getName(), computerDetail.get(i).getIntroduced(),
+              computerDetail.get(i).getDiscontinued(), computerDetail.get(i).getCompany_id());
           System.out.println();
         }
         break;

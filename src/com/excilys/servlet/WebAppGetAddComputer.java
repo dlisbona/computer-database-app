@@ -53,14 +53,9 @@ public class WebAppGetAddComputer extends HttpServlet {
 
       List<String> companyNames = CompanyService.getCompanyListString();
       int companyComputerId = companyNames.indexOf(companyComputerName) + 2;
-      System.out.println(companyComputerName);
-      System.out.println(companyComputerId);
       BeanComputer computerToAdd = new BeanComputer(idComputer, nameComputer, introducedTimestamp,
           discontinuedTimestamp, companyComputerId);
       computerDAO.insert(computerToAdd);
-      doGet(request, response);
-
-
 
     } catch (SQLException e) {
       // TODO Auto-generated catch block

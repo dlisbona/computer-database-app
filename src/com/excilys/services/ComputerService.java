@@ -52,8 +52,9 @@ public class ComputerService {
         computerListSeul.clear();
         computerListSeul =
             computerDAO.requete("SELECT * FROM computer WHERE id='" + ordinateur + "';");
+
         for (BeanComputer computer : computerListSeul) {
-          ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
+          ComputerDTO computerDTO = Mapper.computerBeanToComputerDTOCompanyIdIsInt(computer);
           computerDTOListSeul.add(computerDTO);
         }
         return computerDTOListSeul;

@@ -30,6 +30,7 @@ public class Mapper {
     if (i != null) {
       String timeStampToString = String.valueOf(i);
       timeStampToString = timeStampToString.replace("00:00:00.0", " ");
+      timeStampToString = timeStampToString.trim();
 
       return timeStampToString;
     } else {
@@ -68,11 +69,29 @@ public class Mapper {
     String discontinued = timeStampToSring(computerBean.getDiscontinued());
 
     String companyName = computerBean.getCompanyName();
+
     ComputerDTO computerDTO = new ComputerDTO(id, name, introduced, discontinued, companyName);
 
     return computerDTO;
 
   }
+
+
+  public static ComputerDTO computerBeanToComputerDTOCompanyIdIsInt(BeanComputer computerBean) {
+
+    int id = computerBean.getId();
+    String name = computerBean.getName();
+    String introduced = timeStampToSring(computerBean.getIntroduced());
+    String discontinued = timeStampToSring(computerBean.getDiscontinued());
+
+    int companyId = computerBean.getCompany_id();
+
+    ComputerDTO computerDTO = new ComputerDTO(id, name, introduced, discontinued, companyId);
+
+    return computerDTO;
+
+  }
+
 
   public enum updateEnum {
     updateComputerId, updateComputerName, updateComputerIntroduced, updateComputerDiscontinued, updateComputerCompanyId, exit

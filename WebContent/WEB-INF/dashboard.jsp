@@ -49,6 +49,7 @@
         
 
         <div class="container" style="margin-top: 10px;">
+        
             <table class="table table-striped table-bordered" pagesize="3">
                 <thead>
                     <tr>
@@ -92,13 +93,13 @@
                             <input type="checkbox" name="cb" class="cb" value="${computer.getId()}">
                         </td>
                         <td>
-                            <a href="editComputer.html" onclick="">${computer.getName()}</a>
+                            <a href="/Application-training/editcomputer?computerId=${computer.getId()}" onclick="">${computer.getName()}</a>
                         </td>
     					
                         <td>${computer.getIntroduced()}</td>
                         <td>${computer.getDiscontinued()}</td>
                         <td>${computer.getCompanyName()}</td>
-						<td>${computer.getId()}</td>
+                        <td>${computer.getId()}</td>
                     </tr>
                     </taglib:forEach>
                     
@@ -121,13 +122,13 @@
                       <span aria-hidden="true">&laquo;</span>
                   </a>
                  
-<!--               </li> -->
-<!--               <li><a href="#">1</a></li> -->
-<!--               <li><a href="#">2</a></li> -->
-<!--               <li><a href="#">3</a></li> -->
-<!--               <li><a href="#">4</a></li> -->
-<!--               <li><a href="#">5</a></li> -->
-<!--               <li> -->
+              </li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
 										
  					<a href="/Application-training/dashboard?page=next" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>

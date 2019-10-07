@@ -31,6 +31,8 @@ public class WebAppGetDashboard extends HttpServlet {
     try {
       ComputerService computerService = ComputerService.getInstance();
       String pageDirection = request.getParameter("page");
+
+
       servletContext.getAttribute("computerListTotal");
 
 
@@ -102,11 +104,6 @@ public class WebAppGetDashboard extends HttpServlet {
         requestDispacher.forward(request, response);
 
       }
-
-      System.out.println(pagination);
-
-
-
     } catch (Exception e) {
       throw new ServletException(e);
     }

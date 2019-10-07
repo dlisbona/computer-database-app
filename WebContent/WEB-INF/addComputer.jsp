@@ -11,6 +11,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
+        
             <a class="navbar-brand" href="/Application-training/dashboard"> Application - Computer Database </a>
         </div>
     </header>
@@ -20,7 +21,12 @@
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2 box">
                     <h1>Add Computer</h1>
+                  
+                                          <input type="hidden" value="0" id="id"/> <!-- TODO: Change this value with the computer id -->
+                  
                     <form action="/Application-training/addcomputer" method="POST">
+                       
+                       
                         <fieldset>
                             <div class="form-group">
                                 <label for="computerName">Computer name</label>
