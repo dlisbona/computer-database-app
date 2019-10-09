@@ -18,6 +18,8 @@ public class ComputerDAO {
   private String deleteComputer = "DELETE FROM computer WHERE id=";
   private String insertComputer =
       "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
+  private String updateComputer =
+      "UPDATE computer SET name=?,introduced=?,discontinued=?,company_id=? WHERE id = ?";
 
   private ComputerDAO() {}
 
@@ -104,6 +106,31 @@ public class ComputerDAO {
       pstmt.setDouble(4, computerBean.getCompany_id());
 
       pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public void update(BeanComputer computerBean) {
+    String sql = updateComputer;
+    try (PreparedStatement pstmt =
+        ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
+
+      System.out.println(sql);
+      pstmt.setString(1, computerBean.getName());
+
+      pstmt.setTimestamp(2, computerBean.getIntroduced());
+
+      pstmt.setTimestamp(3, computerBean.getDiscontinued());
+
+      pstmt.setDouble(4, computerBean.getCompany_id());
+
+      pstmt.setInt(5, computerBean.getId());
+
+      pstmt.executeUpdate();
+
+      System.out.println(sql);
 
     } catch (SQLException e) {
       System.out.println(e.getMessage());

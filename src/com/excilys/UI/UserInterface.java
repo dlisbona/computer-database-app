@@ -143,8 +143,7 @@ public class UserInterface extends Verification {
           System.out.println("|                                |");
           String newComputerName = myInput.next();
 
-          if (verificationContenuNom(newComputerName) == false)
-            continue LOOP;
+
 
           System.out.println("|        INTRODUCTION DATE 1     |");
           String newIntroductionDate1 = myInput.next();
@@ -153,8 +152,6 @@ public class UserInterface extends Verification {
           String newEndDate1 = myInput.next();
 
 
-          if (verificationConcordanceDates(newIntroductionDate1, newEndDate1) == false)
-            continue LOOP;
 
           System.out.println("|            COMPANY ID          |");
           int newCompanyId = myInput.nextInt();

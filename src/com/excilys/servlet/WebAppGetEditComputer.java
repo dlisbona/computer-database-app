@@ -13,100 +13,110 @@ import javax.servlet.http.HttpServletResponse;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.access.ComputerDAO;
 import com.excilys.mapper.Mapper;
+import com.excilys.model.BeanCompany;
 import com.excilys.model.BeanComputer;
 import com.excilys.services.CompanyService;
 import com.excilys.services.ComputerService;
+import com.excilys.services.Verification;
 
 @SuppressWarnings("serial")
 public class WebAppGetEditComputer extends HttpServlet {
-  public void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+
+  private String erreurs = "message d'erreur";
+
+
+
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     ServletContext servletContext = this.getServletContext();
-    RequestDispatcher requestDispacher =
-        servletContext.getRequestDispatcher("/WEB-INF/editComputer.jsp");
-
-    List<String> companyNames;
-    try {
-      companyNames = CompanyService.getCompanyListSorted();
-      request.setAttribute("companyNames", companyNames);
-
-    } catch (SQLException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-
-    int computerId = 1;
-
-    String computerIdString = request.getParameter("computerId");
-
-    if (computerIdString != null)
-      computerId = Integer.parseInt(request.getParameter("computerId"));
+    RequestDispatcher requestDispacher = servletContext.getRequestDispatcher("/WEB-INF/editComputer.jsp");
+    int defaultParam = 0;
 
     ComputerService computerService = ComputerService.getInstance();
 
-    List<ComputerDTO> computerDTOList =
-        computerService.getComputerList("unComputer", computerId, 0);
-
-
-
     try {
-      List<String> companyNamesIndexes = CompanyService.getCompanyListString();
 
-      String companyName = null;
-      if (computerDTOList.get(0).getCompany_id() != 0)
-        companyName = companyNamesIndexes.get(computerDTOList.get(0).getCompany_id() - 1);
+      int computerId = computerService.getComputerList("listeEntiere", defaultParam, defaultParam).get(0).getId();
+
+      String computerIdString = request.getParameter("computerId");
+
+      if (computerIdString != null)
+        computerId = Integer.parseInt(request.getParameter("computerId"));
 
 
-      request.setAttribute("companyName", companyName);
+      List<ComputerDTO> computerDTOList = computerService.getComputerList("unComputer", computerId, 0);
+      request.setAttribute("computerDTOList", computerDTOList);
+
+
+      List<BeanCompany> companyListSortedBean = Mapper.beanCompanySorted(CompanyService.getCompanyList());
+      request.setAttribute("companyNamesBean", companyListSortedBean);
+
+      int computerCompanyId = computerDTOList.get(0).getCompany_id();
+
+      BeanCompany companyComputerSelected = null;
+
+      for (BeanCompany company : companyListSortedBean) {
+        if (company.getId() == computerCompanyId)
+          companyComputerSelected = company;
+      }
+
+      request.setAttribute("companySelected", companyComputerSelected);
+
+
+      requestDispacher.forward(request, response);
+
+      computerDTOList.clear();
 
     } catch (SQLException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
-
-    request.setAttribute("computerDTOList", computerDTOList);
-
-    requestDispacher.forward(request, response);
-    computerDTOList.clear();
-
   }
 
 
-  public void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws IOException, ServletException {
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     try {
 
-      System.out.println(request.getParameterNames().hasMoreElements());
-
       ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
-      int idComputer = 0;
 
+      int idComputer = Integer.parseInt(request.getParameter("computerId"));
 
       String nameComputer = request.getParameter("nameComputer");
-      System.out.println(nameComputer);
 
+      Verification verification = new Verification();
+      verification.verificationContenuNom(nameComputer);
 
       String introducedDateString = request.getParameter("introducedDate");
-      System.out.println(introducedDateString);
-
-
-
       String discontinuedDateString = request.getParameter("discontinuedDate");
+
+
+      try {
+        verification.verificationConcordanceDates(introducedDateString, discontinuedDateString);
+      } catch (Exception e) {
+        request.setAttribute("erreurDates", e);
+
+      }
 
 
       Timestamp introducedTimestamp = Mapper.stringToTime(introducedDateString);
       Timestamp discontinuedTimestamp = Mapper.stringToTime(discontinuedDateString);
 
-      String companyComputerName = request.getParameter("companyComputerName");
+
+      List<BeanCompany> companyListSortedBean = Mapper.beanCompanySorted(CompanyService.getCompanyList());
+      request.setAttribute("companyNamesBean", companyListSortedBean);
+
+      int companyComputerId = 0;
+
+      for (BeanCompany company : companyListSortedBean) {
+        if (company.getName().equals(request.getParameter("companyComputerName").trim()))
+          companyComputerId = company.getId();
+      }
 
 
+      BeanComputer computerToAdd = new BeanComputer(idComputer, nameComputer, introducedTimestamp, discontinuedTimestamp, companyComputerId);
+      computerDAO.update(computerToAdd);
 
-      List<String> companyNames = CompanyService.getCompanyListString();
-      int companyComputerId = companyNames.indexOf(companyComputerName) + 2;
-      BeanComputer computerToAdd = new BeanComputer(idComputer, nameComputer, introducedTimestamp,
-          discontinuedTimestamp, companyComputerId);
-      computerDAO.insert(computerToAdd);
+      doGet(request, response);
+
 
 
     } catch (Exception e) {

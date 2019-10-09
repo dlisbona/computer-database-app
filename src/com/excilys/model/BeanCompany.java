@@ -2,7 +2,7 @@ package com.excilys.model;
 
 public class BeanCompany {
 
-  public BeanCompany(Integer id, String name) {
+  public BeanCompany(int id, String name) {
     super();
     this.id = id;
     this.name = name;

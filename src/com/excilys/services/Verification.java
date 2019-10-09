@@ -5,26 +5,37 @@ import com.excilys.mapper.Mapper;
 
 public class Verification {
 
-  protected static boolean verificationContenuNom(String computerName)
+  public void verificationContenuNom(String computerName) throws Exception
 
   {
-    if (computerName.equals("_") || computerName == "r") {
-      return false;
+    if ("null".equals(computerName) || computerName.isEmpty()) {
+      throw new Exception("String computerName is empty");
     }
-    return true;
   }
 
 
-  protected static boolean verificationConcordanceDates(String dateIntroduced,
-      String dateDiscontinued)
+  public void verificationDate(String date) throws Exception
 
   {
+    if ("null".equals(date) || date.isEmpty()) {
+      throw new Exception("String Date is empty");
+    }
+  }
+
+
+
+  public void verificationConcordanceDates(String dateIntroduced, String dateDiscontinued)
+      throws Exception {
+
     LocalDateTime introduced = Mapper.stringToLocalDateTime(dateIntroduced);
     LocalDateTime discontinued = Mapper.stringToLocalDateTime(dateDiscontinued);
-    if (introduced.isBefore(discontinued)) {
-      return true;
-    } else {
-      return false;
+    if (introduced.isAfter(discontinued)) {
+
+      throw new Exception("dateDiscontinued is anterious to dateIntroduced ");
     }
+
   }
+
+
+
 }

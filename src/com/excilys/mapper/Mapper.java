@@ -2,8 +2,12 @@ package com.excilys.mapper;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 import com.excilys.DTO.ComputerDTO;
+import com.excilys.model.BeanCompany;
 import com.excilys.model.BeanComputer;
+
 
 public class Mapper {
 
@@ -11,6 +15,25 @@ public class Mapper {
     String date = i + "T00:00:00";
     final LocalDateTime stringToLocalDateTime = LocalDateTime.parse(date);
     return stringToLocalDateTime;
+  }
+
+
+  public static List<BeanCompany> beanCompanySorted(List<BeanCompany> beanCompanyList) {
+
+
+    // List<BeanCompany> beanCompanySorted2 = beanCompanyList.stream()
+    // .sorted(Comparator.comparing(BeanCompany::getName).reversed())
+    // .collect(Collectors.toList());
+
+
+    beanCompanyList.sort(Comparator.comparing(BeanCompany::getName));
+
+    List<BeanCompany> beanCompanySorted = beanCompanyList;
+
+
+    return beanCompanySorted;
+
+
   }
 
 

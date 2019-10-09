@@ -20,6 +20,7 @@ public class CompanyService {
   }
 
 
+
   public static List<BeanCompany> getCompanyList() throws SQLException {
     final CompanyDAO companyDAO = CompanyDAO.getInstanceCompanyDAO();
     final List<BeanCompany> company = companyDAO.requete("SELECT * FROM company");
@@ -44,7 +45,10 @@ public class CompanyService {
       companySorted.add(companyName.getName());
     }
     Collections.sort(companySorted);
+
     return companySorted;
   }
+
+
 
 }

@@ -22,20 +22,19 @@
                     <div class="label label-default pull-right">
                     </div>
                     <h1>Edit Computer ${computerDTO.getName()}</h1>
-
-                        <input type="hidden" value="0" id="id"/> <!-- TODO: Change this value with the computer id -->
-         
+        
                         
                     <form action="/Application-training/editcomputer" method="POST">
+                    
+                      <input type="hidden" value="${computerDTOList.get(0).getId()}" name="computerId"/>
+                      <input type="hidden" name="companyNameIdSelected" value=" ${companySelected.getId()}"/>
                       
                         <fieldset>
                             <div class="form-group">
                                 <label for="computerName">Computer name</label>
-                                <input type="text" class="form-control" id="computerName" name="NameComputer" placeholder="Name computer" value="${computerDTOList.get(0).getName()}">
+                                <input type="text" class="form-control" id="computerName" name="nameComputer" placeholder="Name computer" value="${computerDTOList.get(0).getName()}">
                             </div>
-                            <div class="form-group">
-                            
-                            
+                            <div class="form-group">                           
                                 <label for="introduced">Introduced date</label>
                                 <input type="date" class="form-control" id="introduced" name="introducedDate" placeholder="Date introduced" value="${computerDTOList.get(0).getIntroduced()}">
                             </div>
@@ -45,17 +44,24 @@
                                 <input type="date" class="form-control" id="discontinued"  name="discontinuedDate" placeholder="Date discontinued" value="${computerDTOList.get(0).getDiscontinued()}">
                             </div>
                            
+                            <h4>Edit Computer ${erreurDates}</h4>
                             <div class="form-group">
                                 <label for="companyId">Company</label>
+                               
                                 <select class="form-control" id="companyId"  name="companyComputerName">
-                                    <option selected="selected">${companyName}</option>
-                                    <taglib:forEach items="${companyNames}" var="company">
- 							  	    <option value="${company}">${company}</option>
-                    			    </taglib:forEach>
-                   				 
                                     
+                                    <option selected="selected">${companySelected.getName()}</option>
+                            
+                                    <taglib:forEach items="${companyNamesBean}" var="company">
+ 							  	    <option >${company.getName()}</option>
+                    			    </taglib:forEach>
+									
+<%-- 									<input type="hidden" name="companyIdchoice" value=" ${company.getId()}"/> --%>
+                   				                                    
                                 </select>
-                            </div>            
+                            </div>     
+     
+                                   
                         </fieldset>
                         <div class="actions pull-right">
                             <input type="submit" value="edit" class="btn btn-primary">

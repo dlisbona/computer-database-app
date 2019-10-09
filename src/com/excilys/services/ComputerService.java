@@ -37,6 +37,19 @@ public class ComputerService {
 
 
 
+  public List<ComputerDTO> getComputerListName(String ordinateurNom, int pages) {
+    computerList.clear();
+    computerList = computerDAO.requete(
+        "SELECT * FROM computer WHERE name= '" + ordinateurNom + "' limit " + pages + ",10 ;");
+    for (BeanComputer computer : computerList) {
+      ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
+      computerDTOList.add(computerDTO);
+    }
+    return computerDTOList;
+  }
+
+
+
   public List<ComputerDTO> getComputerList(String choix, int ordinateur, int pages) {
     switch (choix) {
       case "listeEntiere":
@@ -47,6 +60,7 @@ public class ComputerService {
           computerDTOList.add(computerDTO);
         }
         return computerDTOList;
+
 
       case "unComputer":
         computerListSeul.clear();
