@@ -8,6 +8,7 @@
     <link href="/Application-training/front/CSS/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="/Application-training/front/CSS/font-awesome.css" rel="stylesheet" media="screen">
 	<link href="/Application-training/front/CSS/main.css" rel="stylesheet" media="screen">
+	<script src="js/app-ajax.js" type="text/javascript"></script>
 </head>
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
@@ -34,6 +35,8 @@
                                 <label for="computerName">Computer name</label>
                                 <input type="text" class="form-control" id="computerName" name="nameComputer" placeholder="Name computer" value="${computerDTOList.get(0).getName()}">
                             </div>
+                            <p id="ajaxcomputerNameResponse"></p>
+                            
                             <div class="form-group">                           
                                 <label for="introduced">Introduced date</label>
                                 <input type="date" class="form-control" id="introduced" name="introducedDate" placeholder="Date introduced" value="${computerDTOList.get(0).getIntroduced()}">
@@ -74,4 +77,9 @@
         </div>
     </section>
 </body>
+<footer>
+    <script src="/Application-training/front/javascript/jquery.min.js"></script>
+	<script src="/Application-training/front/javascript/ajaxValidator.js"></script>
+</footer>
+
 </html>

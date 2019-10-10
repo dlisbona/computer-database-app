@@ -28,47 +28,61 @@ public class WebAppGetEditComputer extends HttpServlet {
 
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    ServletContext servletContext = this.getServletContext();
-    RequestDispatcher requestDispacher = servletContext.getRequestDispatcher("/WEB-INF/editComputer.jsp");
-    int defaultParam = 0;
-
-    ComputerService computerService = ComputerService.getInstance();
-
-    try {
-
-      int computerId = computerService.getComputerList("listeEntiere", defaultParam, defaultParam).get(0).getId();
-
-      String computerIdString = request.getParameter("computerId");
-
-      if (computerIdString != null)
-        computerId = Integer.parseInt(request.getParameter("computerId"));
 
 
-      List<ComputerDTO> computerDTOList = computerService.getComputerList("unComputer", computerId, 0);
-      request.setAttribute("computerDTOList", computerDTOList);
+    String computerName;
+
+    computerName = request.getParameter("computerName");
+    System.out.println(computerName);
+
+    if (computerName == null || "".equals(computerName)) {
+      response.setContentType("text/plain");
+      response.getWriter().write("attention nom d'ordinateur vide");
+    } else {
 
 
-      List<BeanCompany> companyListSortedBean = Mapper.beanCompanySorted(CompanyService.getCompanyList());
-      request.setAttribute("companyNamesBean", companyListSortedBean);
+      ServletContext servletContext = this.getServletContext();
+      RequestDispatcher requestDispacher = servletContext.getRequestDispatcher("/WEB-INF/editComputer.jsp");
+      int defaultParam = 0;
 
-      int computerCompanyId = computerDTOList.get(0).getCompany_id();
+      ComputerService computerService = ComputerService.getInstance();
 
-      BeanCompany companyComputerSelected = null;
+      try {
 
-      for (BeanCompany company : companyListSortedBean) {
-        if (company.getId() == computerCompanyId)
-          companyComputerSelected = company;
+        int computerId = computerService.getComputerList("listeEntiere", defaultParam, defaultParam).get(0).getId();
+
+        String computerIdString = request.getParameter("computerId");
+
+        if (computerIdString != null)
+          computerId = Integer.parseInt(request.getParameter("computerId"));
+
+
+        List<ComputerDTO> computerDTOList = computerService.getComputerList("unComputer", computerId, 0);
+        request.setAttribute("computerDTOList", computerDTOList);
+
+
+        List<BeanCompany> companyListSortedBean = Mapper.beanCompanySorted(CompanyService.getCompanyList());
+        request.setAttribute("companyNamesBean", companyListSortedBean);
+
+        int computerCompanyId = computerDTOList.get(0).getCompany_id();
+
+        BeanCompany companyComputerSelected = null;
+
+        for (BeanCompany company : companyListSortedBean) {
+          if (company.getId() == computerCompanyId)
+            companyComputerSelected = company;
+        }
+
+        request.setAttribute("companySelected", companyComputerSelected);
+
+
+        requestDispacher.forward(request, response);
+
+        computerDTOList.clear();
+
+      } catch (SQLException e) {
+        e.printStackTrace();
       }
-
-      request.setAttribute("companySelected", companyComputerSelected);
-
-
-      requestDispacher.forward(request, response);
-
-      computerDTOList.clear();
-
-    } catch (SQLException e) {
-      e.printStackTrace();
     }
   }
 
@@ -89,12 +103,14 @@ public class WebAppGetEditComputer extends HttpServlet {
       String discontinuedDateString = request.getParameter("discontinuedDate");
 
 
+
       try {
         verification.verificationConcordanceDates(introducedDateString, discontinuedDateString);
       } catch (Exception e) {
         request.setAttribute("erreurDates", e);
 
       }
+
 
 
       Timestamp introducedTimestamp = Mapper.stringToTime(introducedDateString);
@@ -116,7 +132,6 @@ public class WebAppGetEditComputer extends HttpServlet {
       computerDAO.update(computerToAdd);
 
       doGet(request, response);
-
 
 
     } catch (Exception e) {

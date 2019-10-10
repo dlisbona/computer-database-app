@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+
+<script src="js/app-ajax.js" type="text/javascript"></script>
         <title>Test</title>
                 <title>SO question 4112686</title>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -14,6 +16,21 @@
                 });
             });
         });
+        
+        
+        
+        
+        
+        $(document).ready(function() {
+        $('#userName').blur(function(event) {
+                var name = $('#userName').val();
+                $.get('connexion', {
+                        userName : name
+                }, function(responseText) {
+                        $('#ajaxWebAppGetConnexionResponse').text(responseText);
+                });
+        });
+});
         
         </script>
     </head>
@@ -29,7 +46,20 @@
          
 		<p><taglib:out value="${auteur}" /></p>
 		
+		
+	<form>
+		Enter Your Name: <input type="text" id="userName" />
+	</form>
+	<br>
+	<br>
+
+	<strong>Ajax Response</strong>:<div id="ajaxWebAppGetConnexionResponse"></div>
+	
+		
     </body>
-    
+    <script src="/Application-training/front/javascript/jquery.min.js"></script>
+	<script src="/Application-training/front/javascript/ajaxValidator.js"></script>
+    <footer>
+    </footer>
 </html>
          

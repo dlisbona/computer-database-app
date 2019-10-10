@@ -93,7 +93,7 @@
                             <input type="checkbox" name="cb" class="cb" value="${computer.getId()}">
                         </td>
                         <td>
-                            <a href="/Application-training/editcomputer?computerId=${computer.getId()}" onclick="">${computer.getName()}</a>
+                            <a href="/Application-training/editcomputer?computerId=${computer.getId()}&computerName=${computer.getName()}" onclick="">${computer.getName()}</a>
                         </td>
     					
                         <td>${computer.getIntroduced()}</td>
