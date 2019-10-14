@@ -35,7 +35,7 @@ public class ComputerDAO {
   public List<BeanComputer> requete(String requeteSQL) {
     computers = new ArrayList<BeanComputer>();
     try {
-      statement = ConnectionMySQL.getInstanceConnection().getConnection().createStatement();
+      statement = ConnectionMySQLPremier.getInstanceConnection().getConnection().createStatement();
       result = statement.executeQuery(requeteSQL);
 
       while (result.next()) {
@@ -64,7 +64,7 @@ public class ComputerDAO {
   public List<BeanComputer> requeteUI(String requeteSQL) {
     computers = new ArrayList<BeanComputer>();
     try {
-      statement = ConnectionMySQL.getInstanceConnection().getConnection().createStatement();
+      statement = ConnectionMySQLPremier.getInstanceConnection().getConnection().createStatement();
       result = statement.executeQuery(requeteSQL);
 
       while (result.next()) {
@@ -95,7 +95,7 @@ public class ComputerDAO {
   public void insert(BeanComputer computerBean) {
     String sql = insertComputer;
     try (PreparedStatement pstmt =
-        ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
+        ConnectionMySQLPremier.getInstanceConnection().getConnection().prepareStatement(sql)) {
 
       pstmt.setString(1, computerBean.getName());
 
@@ -115,7 +115,7 @@ public class ComputerDAO {
   public void update(BeanComputer computerBean) {
     String sql = updateComputer;
     try (PreparedStatement pstmt =
-        ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
+        ConnectionMySQLPremier.getInstanceConnection().getConnection().prepareStatement(sql)) {
 
       System.out.println(sql);
       pstmt.setString(1, computerBean.getName());
@@ -145,7 +145,7 @@ public class ComputerDAO {
     try (
 
         PreparedStatement pstmt =
-            ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
+            ConnectionMySQLPremier.getInstanceConnection().getConnection().prepareStatement(sql)) {
       pstmt.executeUpdate();
 
     } catch (SQLException e) {
@@ -157,7 +157,7 @@ public class ComputerDAO {
 
   public void updateComputer(String sql) {
     try (PreparedStatement pstmt =
-        ConnectionMySQL.getInstanceConnection().getConnection().prepareStatement(sql)) {
+        ConnectionMySQLPremier.getInstanceConnection().getConnection().prepareStatement(sql)) {
       pstmt.executeUpdate();
       System.out.println("update");
     } catch (SQLException e) {

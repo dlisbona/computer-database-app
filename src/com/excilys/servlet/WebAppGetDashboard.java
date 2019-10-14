@@ -104,8 +104,6 @@ public class WebAppGetDashboard extends HttpServlet {
 
                          default:
                               pagination = 10;
-                              computerListTotal
-                                   .clear();
                               computerListTotal = computerService
                                    .getComputerList("listePagination", defaultReglage, defaultReglage);
                               computerListTotalLenght = computerService
@@ -117,13 +115,14 @@ public class WebAppGetDashboard extends HttpServlet {
                                    .setAttribute("computerListTotal", computerListTotal);
                               requestDispacher
                                    .forward(request, response);
+                              computerListTotal
+                                   .clear();
 
                     }
 
                } else {
                     pagination = 10;
-                    computerListTotal
-                         .clear();
+
                     computerListTotal = computerService
                          .getComputerList("listePagination", defaultReglage, defaultReglage);
                     computerListTotalLenght = computerService
@@ -135,6 +134,8 @@ public class WebAppGetDashboard extends HttpServlet {
                          .setAttribute("computerListTotal", computerListTotal);
                     requestDispacher
                          .forward(request, response);
+                    computerListTotal
+                         .clear();
 
                }
           } catch (Exception e) {
