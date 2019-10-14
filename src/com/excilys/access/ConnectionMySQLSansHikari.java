@@ -4,17 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionMySQLPremier {
+public class ConnectionMySQLSansHikari {
 
      private String url = com.excilys.util.DBproperties.DBurl;
      private String user = com.excilys.util.DBproperties.DBuser;
      private String passwd = com.excilys.util.DBproperties.DBpassword;
      private Connection connect;
-     private static ConnectionMySQLPremier instanceConnection;
+     private static ConnectionMySQLSansHikari instanceConnection;
 
 
 
-     private ConnectionMySQLPremier() throws SQLException {
+     private ConnectionMySQLSansHikari() throws SQLException {
           try {
                Class
                     .forName(com.excilys.util.DBproperties.DBname);
@@ -28,13 +28,13 @@ public class ConnectionMySQLPremier {
 
 
 
-     public static ConnectionMySQLPremier getInstanceConnection() throws SQLException {
+     public static ConnectionMySQLSansHikari getInstanceConnection() throws SQLException {
           if(instanceConnection == null) {
-               instanceConnection = new ConnectionMySQLPremier();
+               instanceConnection = new ConnectionMySQLSansHikari();
           } else if(instanceConnection
                .getConnection()
                .isClosed()) {
-                    instanceConnection = new ConnectionMySQLPremier();
+                    instanceConnection = new ConnectionMySQLSansHikari();
                }
           return instanceConnection;
      }

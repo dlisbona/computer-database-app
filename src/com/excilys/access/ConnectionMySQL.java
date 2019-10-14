@@ -10,6 +10,8 @@ public class ConnectionMySQL {
 
      private static HikariConfig cfg = new HikariConfig();
      private static HikariDataSource ds;
+     private static ConnectionMySQL instanceConnection;
+     private static Connection connect;
 
      static {
           cfg
@@ -29,14 +31,28 @@ public class ConnectionMySQL {
 
 
 
-     private ConnectionMySQL() {};
-
-
-
-     public static Connection getInstanceConnection() throws SQLException {
-
-          return ds
+     private ConnectionMySQL() throws SQLException {
+          ConnectionMySQL.connect = ds
                .getConnection();
+     };
+
+
+
+     public static ConnectionMySQL getInstanceConnection() throws SQLException {
+          if(instanceConnection == null) {
+               instanceConnection = new ConnectionMySQL();
+          } else if(instanceConnection
+               .getConnection()
+               .isClosed()) {
+                    instanceConnection = new ConnectionMySQL();
+               }
+          return instanceConnection;
+     }
+
+
+
+     public Connection getConnection() {
+          return connect;
      }
 
 }

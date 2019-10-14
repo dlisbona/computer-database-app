@@ -26,7 +26,7 @@ public class CompanyDAO {
     Statement statement;
 
     try {
-      statement = ConnectionMySQLPremier.getInstanceConnection().getConnection().createStatement();
+      statement = ConnectionMySQLSansHikari.getInstanceConnection().getConnection().createStatement();
       result = statement.executeQuery(requeteSQL);
 
       while (result.next()) {
