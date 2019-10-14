@@ -2748,6 +2748,43 @@ select[multiple].form-group-lg .form-control {
     padding-top: 6px;
   }
 }
+.btn-none{
+ display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    background: transparent;
+    color: #303030;
+	font-size: 1.5rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+                transform 150ms ease;
+                  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+}
+.btn-none:hover
+{
+	color: #808080;
+
+
+}
+
+
+.btn-none:active
+{
+ text-decoration: underline;
+    	
+}
+
+
 .btn {
   display: inline-block;
   padding: 6px 12px;

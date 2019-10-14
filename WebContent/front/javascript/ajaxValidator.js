@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 $(document).ready(function() {
 	$('#computerName').blur(function(event) {
@@ -8,7 +5,11 @@ $(document).ready(function() {
 		$.get('editcomputer', {
 			computerName : name
 		}, function(responseText) {
-			$('#ajaxcomputerNameResponse').text(responseText);
+			if (responseText === "Vide") {
+				$('#ajaxcomputerNameResponse').text(responseText);
+			} else {
+				$('#ajaxcomputerNameResponse').text("");
+			}
 		});
 	});
 });

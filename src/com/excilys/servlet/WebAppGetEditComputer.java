@@ -17,126 +17,149 @@ import com.excilys.model.BeanCompany;
 import com.excilys.model.BeanComputer;
 import com.excilys.services.CompanyService;
 import com.excilys.services.ComputerService;
-import com.excilys.services.Verification;
 
 @SuppressWarnings("serial")
 public class WebAppGetEditComputer extends HttpServlet {
 
-  private String erreurs = "message d'erreur";
+     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+          String erreur = "true";
+          String computerName;
+          String referer = request
+               .getHeader("referer");
+          computerName = request
+               .getParameter("computerName");
+
+          if(""
+               .equals(computerName)
+                    & request
+                         .getHeader("referer") != null) {
+               response
+                    .setContentType("text/plain");
+               response
+                    .getWriter()
+                    .write("Vide");
+               request
+                    .setAttribute("erreur", erreur);
+
+
+          } else {
+
+               erreur = "false";
+               request
+                    .setAttribute("erreur", erreur);
+
+               ServletContext servletContext = this
+                    .getServletContext();
+               RequestDispatcher requestDispacher = servletContext
+                    .getRequestDispatcher("/WEB-INF/editComputer.jsp");
+               int defaultParam = 0;
+               ComputerService computerService = ComputerService
+                    .getInstance();
+
+               try {
+
+                    int computerId = computerService
+                         .getComputerList("listeEntiere", defaultParam, defaultParam)
+                         .get(0)
+                         .getId();
+
+                    String computerIdString = request
+                         .getParameter("computerId");
+
+                    if(computerIdString != null) computerId = Integer
+                         .parseInt(request
+                              .getParameter("computerId"));
+
+                    List<ComputerDTO> computerDTOList = computerService
+                         .getComputerList("unComputer", computerId, 0);
+                    request
+                         .setAttribute("computerDTOList", computerDTOList);
+                    List<BeanCompany> companyListSortedBean = Mapper
+                         .beanCompanySorted(CompanyService
+                              .getCompanyList());
+                    request
+                         .setAttribute("companyNamesBean", companyListSortedBean);
+                    int computerCompanyId = computerDTOList
+                         .get(0)
+                         .getCompany_id();
+                    BeanCompany companyComputerSelected = null;
+
+                    for (BeanCompany company : companyListSortedBean) {
+                         if(company
+                              .getId() == computerCompanyId) companyComputerSelected = company;
+                    }
+
+                    request
+                         .setAttribute("companySelected", companyComputerSelected);
+                    requestDispacher
+                         .forward(request, response);
+                    computerDTOList
+                         .clear();
+
+               } catch (SQLException e) {
+                    e
+                         .printStackTrace();
+               }
+          }
+     }
 
 
 
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+          try {
+
+               ComputerDAO computerDAO = ComputerDAO
+                    .getInstanceComputerDAO();
+
+               int idComputer = Integer
+                    .parseInt(request
+                         .getParameter("computerId"));
+
+               String nameComputer = request
+                    .getParameter("nameComputer");
+
+               String introducedDateString = request
+                    .getParameter("introducedDate");
+               String discontinuedDateString = request
+                    .getParameter("discontinuedDate");
+
+               Timestamp introducedTimestamp = Mapper
+                    .stringToTime(introducedDateString);
+               Timestamp discontinuedTimestamp = Mapper
+                    .stringToTime(discontinuedDateString);
 
 
+               List<BeanCompany> companyListSortedBean = Mapper
+                    .beanCompanySorted(CompanyService
+                         .getCompanyList());
+               request
+                    .setAttribute("companyNamesBean", companyListSortedBean);
 
-    String computerName;
+               int companyComputerId = 0;
 
-    computerName = request.getParameter("computerName");
-    System.out.println(computerName);
-
-    if (computerName == null || "".equals(computerName)) {
-      response.setContentType("text/plain");
-      response.getWriter().write("attention nom d'ordinateur vide");
-    } else {
-
-
-      ServletContext servletContext = this.getServletContext();
-      RequestDispatcher requestDispacher = servletContext.getRequestDispatcher("/WEB-INF/editComputer.jsp");
-      int defaultParam = 0;
-
-      ComputerService computerService = ComputerService.getInstance();
-
-      try {
-
-        int computerId = computerService.getComputerList("listeEntiere", defaultParam, defaultParam).get(0).getId();
-
-        String computerIdString = request.getParameter("computerId");
-
-        if (computerIdString != null)
-          computerId = Integer.parseInt(request.getParameter("computerId"));
+               for (BeanCompany company : companyListSortedBean) {
+                    if(company
+                         .getName()
+                         .equals(request
+                              .getParameter("companyComputerName")
+                              .trim()))
+                         companyComputerId = company
+                              .getId();
+               }
 
 
-        List<ComputerDTO> computerDTOList = computerService.getComputerList("unComputer", computerId, 0);
-        request.setAttribute("computerDTOList", computerDTOList);
+               BeanComputer computerToAdd = new BeanComputer(idComputer, nameComputer, introducedTimestamp, discontinuedTimestamp, companyComputerId);
+               computerDAO
+                    .update(computerToAdd);
+
+               doGet(request, response);
 
 
-        List<BeanCompany> companyListSortedBean = Mapper.beanCompanySorted(CompanyService.getCompanyList());
-        request.setAttribute("companyNamesBean", companyListSortedBean);
-
-        int computerCompanyId = computerDTOList.get(0).getCompany_id();
-
-        BeanCompany companyComputerSelected = null;
-
-        for (BeanCompany company : companyListSortedBean) {
-          if (company.getId() == computerCompanyId)
-            companyComputerSelected = company;
-        }
-
-        request.setAttribute("companySelected", companyComputerSelected);
-
-
-        requestDispacher.forward(request, response);
-
-        computerDTOList.clear();
-
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-    }
-  }
-
-
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    try {
-
-      ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
-
-      int idComputer = Integer.parseInt(request.getParameter("computerId"));
-
-      String nameComputer = request.getParameter("nameComputer");
-
-      Verification verification = new Verification();
-      verification.verificationContenuNom(nameComputer);
-
-      String introducedDateString = request.getParameter("introducedDate");
-      String discontinuedDateString = request.getParameter("discontinuedDate");
-
-
-
-      try {
-        verification.verificationConcordanceDates(introducedDateString, discontinuedDateString);
-      } catch (Exception e) {
-        request.setAttribute("erreurDates", e);
-
-      }
-
-
-
-      Timestamp introducedTimestamp = Mapper.stringToTime(introducedDateString);
-      Timestamp discontinuedTimestamp = Mapper.stringToTime(discontinuedDateString);
-
-
-      List<BeanCompany> companyListSortedBean = Mapper.beanCompanySorted(CompanyService.getCompanyList());
-      request.setAttribute("companyNamesBean", companyListSortedBean);
-
-      int companyComputerId = 0;
-
-      for (BeanCompany company : companyListSortedBean) {
-        if (company.getName().equals(request.getParameter("companyComputerName").trim()))
-          companyComputerId = company.getId();
-      }
-
-
-      BeanComputer computerToAdd = new BeanComputer(idComputer, nameComputer, introducedTimestamp, discontinuedTimestamp, companyComputerId);
-      computerDAO.update(computerToAdd);
-
-      doGet(request, response);
-
-
-    } catch (Exception e) {
-      throw new ServletException(e);
-    }
-  }
+          } catch (Exception e) {
+               throw new ServletException(e);
+          }
+     }
 }
 

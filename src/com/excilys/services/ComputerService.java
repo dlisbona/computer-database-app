@@ -10,163 +10,210 @@ import com.excilys.mapper.Mapper;
 import com.excilys.model.BeanComputer;
 
 public class ComputerService {
-  private static ComputerService instanceComputerService;
-  private String computerJoinCompany =
-      "SELECT computer.id,computer.name,computer.introduced, computer.discontinued,company.name as company_name "
-          + "FROM computer " + "LEFT OUTER JOIN company ON computer.company_id=company.id limit ";
-
-  private ComputerService() {}
-
-  public static ComputerService getInstance() {
-    if (instanceComputerService == null) {
-      instanceComputerService = new ComputerService();
-    }
-    return instanceComputerService;
-  }
-
-  final ComputerDAO computerDAO = ComputerDAO.getInstanceComputerDAO();
-
-  List<ComputerDTO> computerDTOList = new ArrayList<ComputerDTO>();
-  List<BeanComputer> computerList = new ArrayList<BeanComputer>();
-
-  List<ComputerDTO> computerDTOListSeul = new ArrayList<ComputerDTO>();
-  List<BeanComputer> computerListSeul = new ArrayList<BeanComputer>();
-
-  List<ComputerDTO> computerDTOListPage = new ArrayList<ComputerDTO>();
-  List<BeanComputer> computerListPage = new ArrayList<BeanComputer>();
+     private static ComputerService instanceComputerService;
+     private String computerJoinCompany = "SELECT computer.id,computer.name,computer.introduced, computer.discontinued,company.name as company_name " + "FROM computer " + "LEFT OUTER JOIN company ON computer.company_id=company.id limit ";
 
 
 
-  public List<ComputerDTO> getComputerListName(String ordinateurNom, int pages) {
-    computerList.clear();
-    computerList = computerDAO.requete(
-        "SELECT * FROM computer WHERE name= '" + ordinateurNom + "' limit " + pages + ",10 ;");
-    for (BeanComputer computer : computerList) {
-      ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
-      computerDTOList.add(computerDTO);
-    }
-    return computerDTOList;
-  }
+     private ComputerService() {}
 
 
 
-  public List<ComputerDTO> getComputerList(String choix, int ordinateur, int pages) {
-    switch (choix) {
-      case "listeEntiere":
-        computerList.clear();
-        computerList = computerDAO.requete("SELECT * FROM computer");
-        for (BeanComputer computer : computerList) {
-          ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
-          computerDTOList.add(computerDTO);
-        }
-        return computerDTOList;
+     public static ComputerService getInstance() {
+          if(instanceComputerService == null) {
+               instanceComputerService = new ComputerService();
+          }
+          return instanceComputerService;
+     }
 
+     final ComputerDAO computerDAO = ComputerDAO
+          .getInstanceComputerDAO();
 
-      case "unComputer":
-        computerListSeul.clear();
-        computerListSeul =
-            computerDAO.requete("SELECT * FROM computer WHERE id='" + ordinateur + "';");
+     List<ComputerDTO> computerDTOList = new ArrayList<ComputerDTO>();
+     List<BeanComputer> computerList = new ArrayList<BeanComputer>();
 
-        for (BeanComputer computer : computerListSeul) {
-          ComputerDTO computerDTO = Mapper.computerBeanToComputerDTOCompanyIdIsInt(computer);
-          computerDTOListSeul.add(computerDTO);
-        }
-        return computerDTOListSeul;
+     List<ComputerDTO> computerDTOListSeul = new ArrayList<ComputerDTO>();
+     List<BeanComputer> computerListSeul = new ArrayList<BeanComputer>();
 
-      case "listePagination":
-
-        computerListPage.clear();
-        computerListPage = computerDAO.requeteUI(computerJoinCompany + pages + ", 10 ;");
-
-
-        computerDTOList.clear();
-
-        for (BeanComputer computer : computerListPage) {
-          ComputerDTO computerDTO = Mapper.computerBeanToComputerDTO(computer);
-          computerDTOListPage.add(computerDTO);
-        }
-        return computerDTOListPage;
-
-
-      default:
-        return computerDTOList;
-
-    }
-
-
-  }
+     List<ComputerDTO> computerDTOListPage = new ArrayList<ComputerDTO>();
+     List<BeanComputer> computerListPage = new ArrayList<BeanComputer>();
 
 
 
-  public void addComputer(int id, String name, String beginDate, String endDate, int idCompany) {
+     public List<ComputerDTO> getComputerListName(String ordinateurNom, int pages) {
+          computerList
+               .clear();
+          computerList = computerDAO
+               .requete("SELECT * FROM computer WHERE name= '" + ordinateurNom + "' limit " + pages + ",10 ;");
+          for (BeanComputer computer : computerList) {
+               ComputerDTO computerDTO = Mapper
+                    .computerBeanToComputerDTO(computer);
+               computerDTOList
+                    .add(computerDTO);
+          }
+          return computerDTOList;
+     }
 
-    final ComputerDTO computerDTO = new ComputerDTO(id, name, beginDate, endDate, idCompany);
-
-    final BeanComputer computerBean = Mapper.computerDTOToComputerBean(computerDTO);
-
-    computerDAO.insert(computerBean);
-  }
 
 
+     public List<ComputerDTO> getComputerListPage(int pages, int pageLenght) {
 
-  public void deleteComputer(int i) {
-    computerDAO.delete(i);
-  }
+          computerListPage
+               .clear();
+          computerDTOListPage
+               .clear();
+          computerListPage = computerDAO
+               .requeteUI(computerJoinCompany + pages + ", " + pageLenght + " ;");
+          for (BeanComputer computer : computerListPage) {
+               ComputerDTO computerDTO = Mapper
+                    .computerBeanToComputerDTO(computer);
+               computerDTOListPage
+                    .add(computerDTO);
+          }
+          return computerDTOListPage;
+     }
 
-  public void updateComputer(int selectionIdUpdate, String valueUpdate, int selectionMenu) {
-    switch (Mapper.mapperSwitchUpdate(selectionMenu)) {
 
-      case updateComputerName:
-        String valueUpdateName = (String) valueUpdate;
-        String sql =
-            "UPDATE computer SET name='" + valueUpdateName + "' WHERE id=" + selectionIdUpdate;
-        computerDAO.updateComputer(sql);
-        break;
 
-      case updateComputerId:
-        int valueUpdateId = Integer.parseInt(valueUpdate);
-        sql = "UPDATE computer SET name = '" + valueUpdateId + "' WHERE id = " + selectionIdUpdate;
-        computerDAO.updateComputer(sql);
-        break;
+     public List<ComputerDTO> getComputerList(String choix, int ordinateur, int pages) {
+          switch (choix) {
+               case "listeEntiere":
+                    computerList
+                         .clear();
+                    computerList = computerDAO
+                         .requete("SELECT * FROM computer");
+                    for (BeanComputer computer : computerList) {
+                         ComputerDTO computerDTO = Mapper
+                              .computerBeanToComputerDTO(computer);
+                         computerDTOList
+                              .add(computerDTO);
+                    }
+                    return computerDTOList;
 
-      case updateComputerIntroduced:
 
-        valueUpdate = valueUpdate + "T00:00:00";
+               case "unComputer":
+                    computerListSeul
+                         .clear();
+                    computerListSeul = computerDAO
+                         .requete("SELECT * FROM computer WHERE id='" + ordinateur + "';");
 
-        Timestamp valueUpdateIntroduced =
-            Mapper.localDateTimeToTimeStamp(Mapper.stringToLocalDateTime(valueUpdate));
+                    for (BeanComputer computer : computerListSeul) {
+                         ComputerDTO computerDTO = Mapper
+                              .computerBeanToComputerDTOCompanyIdIsInt(computer);
+                         computerDTOListSeul
+                              .add(computerDTO);
+                    }
+                    return computerDTOListSeul;
 
-        sql = "UPDATE computer SET introduced='" + valueUpdateIntroduced + "' WHERE id="
-            + selectionIdUpdate;
-        computerDAO.updateComputer(sql);
-        break;
+               case "listePagination":
+                    computerListPage
+                         .clear();
 
-      case updateComputerDiscontinued:
+                    computerListPage = computerDAO
+                         .requeteUI(computerJoinCompany + pages + ", 10 ;");
 
-        valueUpdate = valueUpdate + "T00:00:00";
+                    computerDTOList
+                         .clear();
 
-        Timestamp valueUpdateDiscontinued =
-            Mapper.localDateTimeToTimeStamp(Mapper.stringToLocalDateTime(valueUpdate));
+                    for (BeanComputer computer : computerListPage) {
+                         ComputerDTO computerDTO = Mapper
+                              .computerBeanToComputerDTO(computer);
+                         computerDTOListPage
+                              .add(computerDTO);
+                    }
 
-        sql = "UPDATE computer SET discontinued='" + valueUpdateDiscontinued + "'WHERE id="
-            + selectionIdUpdate;
-        computerDAO.updateComputer(sql);
-        break;
 
-      case updateComputerCompanyId:
-        int valueUpdateIdCompany = Integer.parseInt(valueUpdate);
-        sql = "UPDATE computer SET company_id='" + valueUpdateIdCompany + "'WHERE id="
-            + selectionIdUpdate;
-        computerDAO.updateComputer(sql);
-        break;
-      case exit:
+                    return computerDTOListPage;
 
-        UserInterface.setFieldUpdate(6);
 
-        break;
-    }
-  }
+               default:
+                    return computerDTOList;
 
+          }
+     }
+
+
+
+     public void addComputer(int id, String name, String beginDate, String endDate, int idCompany) {
+
+          final ComputerDTO computerDTO = new ComputerDTO(id, name, beginDate, endDate, idCompany);
+
+          final BeanComputer computerBean = Mapper
+               .computerDTOToComputerBean(computerDTO);
+
+          computerDAO
+               .insert(computerBean);
+     }
+
+
+
+     public void deleteComputer(int i) {
+          computerDAO
+               .delete(i);
+     }
+
+
+
+     public void updateComputer(int selectionIdUpdate, String valueUpdate, int selectionMenu) {
+          switch (Mapper
+               .mapperSwitchUpdate(selectionMenu)) {
+
+               case updateComputerName:
+                    String valueUpdateName = (String) valueUpdate;
+                    String sql = "UPDATE computer SET name='" + valueUpdateName + "' WHERE id=" + selectionIdUpdate;
+                    computerDAO
+                         .updateComputer(sql);
+                    break;
+
+               case updateComputerId:
+                    int valueUpdateId = Integer
+                         .parseInt(valueUpdate);
+                    sql = "UPDATE computer SET name = '" + valueUpdateId + "' WHERE id = " + selectionIdUpdate;
+                    computerDAO
+                         .updateComputer(sql);
+                    break;
+
+               case updateComputerIntroduced:
+
+                    valueUpdate = valueUpdate + "T00:00:00";
+
+                    Timestamp valueUpdateIntroduced = Mapper
+                         .localDateTimeToTimeStamp(Mapper
+                              .stringToLocalDateTime(valueUpdate));
+
+                    sql = "UPDATE computer SET introduced='" + valueUpdateIntroduced + "' WHERE id=" + selectionIdUpdate;
+                    computerDAO
+                         .updateComputer(sql);
+                    break;
+
+               case updateComputerDiscontinued:
+
+                    valueUpdate = valueUpdate + "T00:00:00";
+
+                    Timestamp valueUpdateDiscontinued = Mapper
+                         .localDateTimeToTimeStamp(Mapper
+                              .stringToLocalDateTime(valueUpdate));
+
+                    sql = "UPDATE computer SET discontinued='" + valueUpdateDiscontinued + "'WHERE id=" + selectionIdUpdate;
+                    computerDAO
+                         .updateComputer(sql);
+                    break;
+
+               case updateComputerCompanyId:
+                    int valueUpdateIdCompany = Integer
+                         .parseInt(valueUpdate);
+                    sql = "UPDATE computer SET company_id='" + valueUpdateIdCompany + "'WHERE id=" + selectionIdUpdate;
+                    computerDAO
+                         .updateComputer(sql);
+                    break;
+               case exit:
+
+                    UserInterface
+                         .setFieldUpdate(6);
+
+                    break;
+          }
+     }
 
 
 }

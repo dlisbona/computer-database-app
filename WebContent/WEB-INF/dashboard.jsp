@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
 <!-- Bootstrap -->
-    <link href="/Application-training/front/CSS/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="/Application-training/front/CSS/bootstrap.css" rel="stylesheet" media="screen">
 	<link href="/Application-training/front/CSS/font-awesome.css" rel="stylesheet" media="screen">
 	<link href="/Application-training/front/CSS/main.css" rel="stylesheet" media="screen">
 </head>
@@ -64,19 +64,30 @@
                                     </a>
                             </span>
                         </th>
+         
                         <th>
-                            Computer name
+							<form id="Computer name" action="#" method="POST">
+								<input type="button" class="btn-none" name="Computer name"  value ="Sort">
+							</form>
+						</th>
+						
+                        <th>
+                        	<form id="Introduced date" action="#" method="POST">
+								<input type="button" class="btn-none" name="Introduced date"  value ="Introduced date">
+							</form> 
                         </th>
+
                         <th>
-                            Introduced date
-                        </th>
-                        <!-- Table header for Discontinued Date -->
-                        <th>
-                            Discontinued date
+                        	<form id="Discontinued date" action="#" method="POST">
+								<input type="button" class="btn-none" name="Discontinued date"  value ="Discontinued date">
+							</form>
                         </th>
                         <!-- Table header for Company -->
                         <th>
-                            Company
+                        <form id="Company" action="#" method="POST">
+								<input type="button" class="btn-none" name="Company"  value ="Company">
+							</form>
+                            
                         </th>
 
                     </tr>
@@ -99,7 +110,6 @@
                         <td>${computer.getIntroduced()}</td>
                         <td>${computer.getDiscontinued()}</td>
                         <td>${computer.getCompanyName()}</td>
-                        <td>${computer.getId()}</td>
                     </tr>
                     </taglib:forEach>
                     
@@ -137,9 +147,15 @@
         </ul>
 
         <div class="btn-group btn-group-sm pull-right" role="group" >
-            <button type="button" class="btn btn-default">10</button>
-            <button type="button" class="btn btn-default">50</button>
-            <button type="button" class="btn btn-default">100</button>
+   
+        	<a href="/Application-training/dashboard?pageLenght=10" class="btn btn-default" > 10 </a>
+        	<a href="/Application-training/dashboard?pageLenght=50" class="btn btn-default" > 50 </a>
+        	<a href="/Application-training/dashboard?pageLenght=100" class="btn btn-default" > 100 </a>
+        	
+<!--         	<button href="/Application-training/dashboard?pageLenght=10" type="button" class="btn btn-default">10</button> -->
+<!--             <button href="/Application-training/dashboard?pageLenght=10" type="button" class="btn btn-default">10</button> -->
+<!--             <button href="/Application-training/dashboard?pageLenght=50" type="button" class="btn btn-default">50</button> -->
+<!--             <button href="/Application-training/dashboard?pageLenght=50" type="button" class="btn btn-default">100</button> -->
         </div>
 
     </footer>
