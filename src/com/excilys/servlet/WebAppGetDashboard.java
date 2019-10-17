@@ -20,6 +20,14 @@ import com.excilys.services.ComputerService;
 public class WebAppGetDashboard extends HttpServlet {
      int pagination = 10;
      private int defaultReglage = 0;
+     static ComputerService computerService;
+
+
+
+     public static void setComputerService(ComputerService setComputerService) {
+
+          computerService = setComputerService;
+     }
 
 
 
@@ -31,8 +39,13 @@ public class WebAppGetDashboard extends HttpServlet {
           RequestDispatcher requestDispacher = servletContext
                .getRequestDispatcher("/WEB-INF/dashboard.jsp");
           int computerListTotalLenght;
-          ComputerService computerService = ComputerService
-               .getInstance();
+
+
+          computerService
+               .getComputerService();
+
+          // ComputerService computerService = ComputerService
+          // .getInstance();
 
           // servletContext
           // .getAttribute("computerListTotal");

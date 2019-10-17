@@ -5,17 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.UI.UserInterface;
+import com.excilys.access.AbstractDAO;
 import com.excilys.access.ComputerDAO;
 import com.excilys.mapper.Mapper;
 import com.excilys.model.BeanComputer;
 
-public class ComputerService {
+public class ComputerService extends AbstractDAO {
      private static ComputerService instanceComputerService;
      private String computerJoinCompany = "SELECT computer.id,computer.name,computer.introduced, computer.discontinued,company.name as company_name " + "FROM computer " + "LEFT OUTER JOIN company ON computer.company_id=company.id limit ";
 
 
 
-     private ComputerService() {}
+     public ComputerService() {}
+
+
+
+     public ComputerService getComputerService() {
+          return new ComputerService();
+     }
 
 
 
@@ -26,8 +33,8 @@ public class ComputerService {
           return instanceComputerService;
      }
 
-     final ComputerDAO computerDAO = ComputerDAO
-          .getInstanceComputerDAO();
+     final ComputerDAO computerDAO = getFactoryDAO()
+          .getComputerDAO();
 
      List<ComputerDTO> computerDTOList = new ArrayList<ComputerDTO>();
      List<BeanComputer> computerList = new ArrayList<BeanComputer>();

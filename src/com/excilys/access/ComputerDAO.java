@@ -7,10 +7,9 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import com.excilys.model.Abstract;
 import com.excilys.model.BeanComputer;
 
-public class ComputerDAO extends Abstract {
+public class ComputerDAO {
 
      private Statement statement;
      private ResultSet result;
@@ -22,7 +21,7 @@ public class ComputerDAO extends Abstract {
 
 
 
-     private ComputerDAO() {}
+     ComputerDAO() {}
 
 
 
@@ -108,10 +107,7 @@ public class ComputerDAO extends Abstract {
                          .getTimestamp("discontinued");
                     companyName = result
                          .getString("company_name");
-                    BeanComputer computer = getBeanFactory()
-                         .GetBeanComputer(idComputer, name, introduced, discontinued, companyName);
-
-                    // new BeanComputer(idComputer, name, introduced, discontinued, companyName);
+                    BeanComputer computer = new BeanComputer(idComputer, name, introduced, discontinued, companyName);
                     computers
                          .add(computer);
 

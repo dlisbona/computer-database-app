@@ -50,8 +50,6 @@ public class WebAppGetAddComputer extends HttpServlet {
      public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
           try {
 
-               ComputerDAO computerDAO = ComputerDAO
-                    .getInstanceComputerDAO();
                int idComputer = 0;
                String nameComputer = request
                     .getParameter("nameComputer");
@@ -68,9 +66,15 @@ public class WebAppGetAddComputer extends HttpServlet {
 
                List<String> companyNames = CompanyService
                     .getCompanyListString();
+
                int companyComputerId = companyNames
                     .indexOf(companyComputerName) + 2;
+
+
                BeanComputer computerToAdd = new BeanComputer(idComputer, nameComputer, introducedTimestamp, discontinuedTimestamp, companyComputerId);
+
+               ComputerDAO computerDAO = ComputerDAO
+                    .getInstanceComputerDAO();
                computerDAO
                     .insert(computerToAdd);
 
