@@ -10,38 +10,41 @@
 			<include-prelude>/WEB-INF/taglib.jsp</include-prelude>
 		</jsp-property-group>
 	</jsp-config>
-	<display-name>Bean</display-name>
-	<listener>
-		<listener-class>com.excilys.model.DependencyInjectionBean</listener-class>
-	</listener>
-	<servlet>
-		<servlet-name>WebAppGetEditComputer</servlet-name>
-		<servlet-class>com.excilys.servlet.WebAppGetEditComputer</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>WebAppGetEditComputer</servlet-name>
-		<url-pattern>/editcomputer</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>WebAppGetConnexion</servlet-name>
-		<servlet-class>com.excilys.servlet.WebAppGetConnexion</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>WebAppGetAddComputer</servlet-name>
-		<servlet-class>com.excilys.servlet.WebAppGetAddComputer</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>WebAppGetAddComputer</servlet-name>
-		<url-pattern>/addcomputer</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>WebAppGetDashboard</servlet-name>
-		<servlet-class>com.excilys.servlet.WebAppGetDashboard</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>WebAppGetDashboard</servlet-name>
-		<url-pattern>/dashboard</url-pattern>
-	</servlet-mapping>
+	
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>WebAppGetEditComputer</servlet-name> -->
+<!-- 		<servlet-class>com.excilys.servlet.WebAppGetEditComputer</servlet-class> -->
+<!-- 	</servlet> -->
+	
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>WebAppGetEditComputer</servlet-name> -->
+<!-- 		<url-pattern>/editcomputer</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+	
+	
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>WebAppGetConnexion</servlet-name> -->
+<!-- 		<servlet-class>com.excilys.servlet.WebAppGetConnexion</servlet-class> -->
+<!-- 	</servlet> -->
+	
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>WebAppGetAddComputer</servlet-name> -->
+<!-- 		<servlet-class>com.excilys.servlet.WebAppGetAddComputer</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>WebAppGetAddComputer</servlet-name> -->
+<!-- 		<url-pattern>/addcomputer</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>WebAppGetDashboard</servlet-name> -->
+<!-- 		<servlet-class>com.excilys.servlet.WebAppGetDashboard</servlet-class> -->
+<!-- 	</servlet> -->
+	
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>WebAppGetDashboard</servlet-name> -->
+<!-- 		<url-pattern>/dashboard</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 	<error-page>
 		<error-code>403</error-code>
 		<location>/WEB-INF/403.jsp</location>
@@ -73,8 +76,8 @@
 		<servlet-name>WebAppGetValidator</servlet-name>
 		<servlet-class>com.excilys.servlet.WebAppGet404</servlet-class>
 	</servlet>
-	<servlet-mapping>
-		<servlet-name>WebAppGetValidator</servlet-name>
-		<url-pattern>/WebAppGetValidator</url-pattern>
-	</servlet-mapping>
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>WebAppGetValidator</servlet-name> -->
+<!-- 		<url-pattern>/WebAppGetValidator</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 </web-app>

@@ -10,29 +10,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet(name = "WebAppGetConnexion", urlPatterns = {"/connexion", "/connection"})
+@WebServlet(name = "connexion", urlPatterns = {"/connexion", "/connection"})
 public class WebAppGetConnexion extends HttpServlet {
 
-  private static final long serialVersionUID = 1L;
-
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     private static final long serialVersionUID = 1L;
 
 
-    String userName = "";
 
-    userName = request.getParameter("userName");
+     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    if (userName == null || "".equals(userName)) {
-      userName = "Guest";
-      ServletContext servletContext = this.getServletContext();
-      RequestDispatcher requestDispacher = servletContext.getRequestDispatcher("/WEB-INF/connexion.jsp");
-      requestDispacher.forward(request, response);
-    } else {
-      userName = userName.trim();
-      String greetings = "Hello " + userName;
-      response.setContentType("text/html");
-      response.getWriter().write(greetings);
-    }
-  }
+
+          String userName = "";
+
+          userName = request
+               .getParameter("userName");
+
+          if(userName == null || ""
+               .equals(userName)) {
+               userName = "Guest";
+               ServletContext servletContext = this
+                    .getServletContext();
+               RequestDispatcher requestDispacher = servletContext
+                    .getRequestDispatcher("/WEB-INF/connexion.jsp");
+               requestDispacher
+                    .forward(request, response);
+          } else {
+               userName = userName
+                    .trim();
+               String greetings = "Hello " + userName;
+               response
+                    .setContentType("text/html");
+               response
+                    .getWriter()
+                    .write(greetings);
+          }
+     }
 }
 

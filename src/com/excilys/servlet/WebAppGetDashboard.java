@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import com.excilys.access.ComputerDAO;
 import com.excilys.services.ComputerService;
 
 
+@WebServlet(name = "dashboard", urlPatterns = "/dashboard")
 @SuppressWarnings("serial")
 public class WebAppGetDashboard extends HttpServlet {
      int pagination = 10;
