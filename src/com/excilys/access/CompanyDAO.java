@@ -14,7 +14,7 @@ public class CompanyDAO {
 
 
 
-     CompanyDAO() {}
+     public CompanyDAO() {}
 
 
 

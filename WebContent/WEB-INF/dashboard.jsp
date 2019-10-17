@@ -43,7 +43,7 @@
             </div>
         </div>
         
-        <form id="deleteForm" action="#" method="POST" >
+        <form id="deleteForm" action="#" method="GET" >
             <input type="hidden" name="selection" value="">
         </form>
         

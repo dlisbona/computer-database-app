@@ -4,6 +4,8 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import com.excilys.access.AbstractDAO;
+import com.excilys.access.CompanyDAO;
+import com.excilys.access.ComputerDAO;
 import com.excilys.access.FactoryDAO;
 import com.excilys.services.ComputerService;
 
@@ -18,10 +20,18 @@ public class DependencyInjectionListener implements ServletContextListener {
           AbstractDAO
                .setFactoryDAO(factoryDAO);
 
+          ComputerDAO computerDAO = new ComputerDAO();
+          factoryDAO
+               .setComputerDAO(computerDAO);
 
           ComputerService computerService = new ComputerService();
           WebAppGetDashboard
                .setComputerService(computerService);
+
+
+          CompanyDAO companyDAO = new CompanyDAO();
+          factoryDAO
+               .setCompanyDAO(companyDAO);
 
 
      }

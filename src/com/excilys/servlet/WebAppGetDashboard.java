@@ -40,7 +40,6 @@ public class WebAppGetDashboard extends HttpServlet {
                .getRequestDispatcher("/WEB-INF/dashboard.jsp");
           int computerListTotalLenght;
 
-
           computerService
                .getComputerService();
 
