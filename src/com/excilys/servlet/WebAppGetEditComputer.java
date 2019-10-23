@@ -5,12 +5,15 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.access.ComputerDAO;
 import com.excilys.mapper.Mapper;
@@ -23,6 +26,25 @@ import com.excilys.services.ComputerService;
 @WebServlet(name = "editComputer", urlPatterns = "/editcomputer")
 @SuppressWarnings("serial")
 public class WebAppGetEditComputer extends HttpServlet {
+
+     @Autowired
+     private CompanyService companyService;
+
+     @Autowired
+     private ComputerDAO computerDAO;
+
+     @Autowired
+     private ComputerService computerService;
+
+
+
+     public void init(ServletConfig config) throws ServletException {
+          super.init(config);
+          SpringBeanAutowiringSupport
+               .processInjectionBasedOnCurrentContext(this);
+     }
+
+
 
      public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -58,8 +80,6 @@ public class WebAppGetEditComputer extends HttpServlet {
                RequestDispatcher requestDispacher = servletContext
                     .getRequestDispatcher("/WEB-INF/editComputer.jsp");
                int defaultParam = 0;
-               ComputerService computerService = ComputerService
-                    .getInstance();
 
                try {
 
@@ -80,7 +100,7 @@ public class WebAppGetEditComputer extends HttpServlet {
                     request
                          .setAttribute("computerDTOList", computerDTOList);
                     List<BeanCompany> companyListSortedBean = Mapper
-                         .beanCompanySorted(CompanyService
+                         .beanCompanySorted(companyService
                               .getCompanyList());
                     request
                          .setAttribute("companyNamesBean", companyListSortedBean);
@@ -113,8 +133,6 @@ public class WebAppGetEditComputer extends HttpServlet {
      public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
           try {
 
-               ComputerDAO computerDAO = ComputerDAO
-                    .getInstanceComputerDAO();
 
                int idComputer = Integer
                     .parseInt(request
@@ -135,7 +153,7 @@ public class WebAppGetEditComputer extends HttpServlet {
 
 
                List<BeanCompany> companyListSortedBean = Mapper
-                    .beanCompanySorted(CompanyService
+                    .beanCompanySorted(companyService
                          .getCompanyList());
                request
                     .setAttribute("companyNamesBean", companyListSortedBean);

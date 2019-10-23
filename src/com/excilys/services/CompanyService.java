@@ -4,51 +4,73 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.excilys.access.CompanyDAO;
 import com.excilys.model.BeanCompany;
 
+@Component
 public class CompanyService {
-  private static CompanyService InstanceCompanyService;
+     private static CompanyService InstanceCompanyService;
 
-  private CompanyService() {}
 
-  public static CompanyService getInstance() {
-    if (InstanceCompanyService == null) {
-      InstanceCompanyService = new CompanyService();
-    }
-    return InstanceCompanyService;
-  }
+     @Autowired
+     private CompanyDAO companyDAO;
 
 
 
-  public static List<BeanCompany> getCompanyList() throws SQLException {
-    final CompanyDAO companyDAO = CompanyDAO.getInstanceCompanyDAO();
-    final List<BeanCompany> company = companyDAO.requete("SELECT * FROM company");
-    return company;
-  }
+     public CompanyService() {}
 
-  public static List<String> getCompanyListString() throws SQLException {
-    final CompanyDAO companyDAO = CompanyDAO.getInstanceCompanyDAO();
-    final List<BeanCompany> company = companyDAO.requete("SELECT * FROM company");
-    final List<String> companyListString = new ArrayList<String>();
-    for (BeanCompany companyName : company) {
-      companyListString.add(companyName.getName());
-    }
-    return companyListString;
-  }
 
-  public static List<String> getCompanyListSorted() throws SQLException {
-    final CompanyDAO companyDAO = CompanyDAO.getInstanceCompanyDAO();
-    final List<BeanCompany> company = companyDAO.requete("SELECT * FROM company");
-    final List<String> companySorted = new ArrayList<String>();
-    for (BeanCompany companyName : company) {
-      companySorted.add(companyName.getName());
-    }
-    Collections.sort(companySorted);
 
-    return companySorted;
-  }
+     public static CompanyService getInstance() {
+          if(InstanceCompanyService == null) {
+               InstanceCompanyService = new CompanyService();
+          }
+          return InstanceCompanyService;
+     }
 
+
+
+     public List<BeanCompany> getCompanyList() throws SQLException {
+
+          final List<BeanCompany> company = companyDAO
+               .requete("SELECT * FROM company");
+          return company;
+     }
+
+
+
+     public List<String> getCompanyListString() throws SQLException {
+
+          final List<BeanCompany> company = companyDAO
+               .requete("SELECT * FROM company");
+          final List<String> companyListString = new ArrayList<String>();
+          for (BeanCompany companyName : company) {
+               companyListString
+                    .add(companyName
+                         .getName());
+          }
+          return companyListString;
+     }
+
+
+
+     public List<String> getCompanyListSorted() throws SQLException {
+
+          final List<BeanCompany> company = companyDAO
+               .requete("SELECT * FROM company");
+          final List<String> companySorted = new ArrayList<String>();
+          for (BeanCompany companyName : company) {
+               companySorted
+                    .add(companyName
+                         .getName());
+          }
+          Collections
+               .sort(companySorted);
+
+          return companySorted;
+     }
 
 
 }

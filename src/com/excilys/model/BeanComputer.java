@@ -35,7 +35,6 @@ public class BeanComputer {
      private Timestamp discontinued;
      private int companyID;
      private String companyName;
-     // pas d'underscore dans les noms de variables
      // Mieux vaut declarer directement un type company : private company companyId;
 
 

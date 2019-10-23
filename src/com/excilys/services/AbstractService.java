@@ -6,7 +6,7 @@ public abstract class AbstractService {
 
 
 
-     protected static ComputerService getComputerService() {
+     protected ComputerService getComputerService() {
           return computerService;
      }
 

@@ -5,12 +5,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.excilys.model.BeanCompany;
 
-
+@Component
 public class CompanyDAO {
-     private static CompanyDAO instanceCompanyDAO;
      private ResultSet result;
+
+     @Autowired
+     private ConnectionMySQLSansHikari connectionMySQLSansHikari;
 
 
 
@@ -18,24 +22,18 @@ public class CompanyDAO {
 
 
 
-     public static CompanyDAO getInstanceCompanyDAO() throws SQLException {
-          if(instanceCompanyDAO == null) {
-               instanceCompanyDAO = new CompanyDAO();
-          }
-          return instanceCompanyDAO;
-     }
-
-
-
      public List<BeanCompany> requete(String requeteSQL) {
           List<BeanCompany> companies = new ArrayList<BeanCompany>();
           Statement statement;
 
+
           try {
-               statement = ConnectionMySQLSansHikari
-                    .getInstanceConnection()
+
+               statement = connectionMySQLSansHikari
                     .getConnection()
                     .createStatement();
+
+
                result = statement
                     .executeQuery(requeteSQL);
 

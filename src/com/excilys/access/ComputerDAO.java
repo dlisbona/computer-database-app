@@ -7,17 +7,23 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.excilys.model.BeanComputer;
 
+
+@Component
 public class ComputerDAO {
 
      private Statement statement;
      private ResultSet result;
-     private static ComputerDAO instanceComputerDAO;
      private List<BeanComputer> computers;
      private String deleteComputer = "DELETE FROM computer WHERE id=";
      private String insertComputer = "INSERT INTO computer(name,introduced,discontinued,company_id) VALUES(?,?,?,?)";
      private String updateComputer = "UPDATE computer SET name=?,introduced=?,discontinued=?,company_id=? WHERE id = ?";
+
+     @Autowired
+     private ConnectionMySQLSansHikari connectionMySQLSansHikari;
 
 
 
@@ -25,20 +31,10 @@ public class ComputerDAO {
 
 
 
-     public static ComputerDAO getInstanceComputerDAO() {
-          if(instanceComputerDAO == null) {
-               instanceComputerDAO = new ComputerDAO();
-          }
-          return instanceComputerDAO;
-     }
-
-
-
      public List<BeanComputer> requete(String requeteSQL) {
           computers = new ArrayList<BeanComputer>();
           try {
-               statement = ConnectionMySQLSansHikari
-                    .getInstanceConnection()
+               statement = connectionMySQLSansHikari
                     .getConnection()
                     .createStatement();
                result = statement
@@ -81,8 +77,7 @@ public class ComputerDAO {
      public List<BeanComputer> requeteUI(String requeteSQL) {
           computers = new ArrayList<BeanComputer>();
           try {
-               statement = ConnectionMySQLSansHikari
-                    .getInstanceConnection()
+               statement = connectionMySQLSansHikari
                     .getConnection()
                     .createStatement();
                result = statement
@@ -123,8 +118,7 @@ public class ComputerDAO {
 
      public void insert(BeanComputer computerBean) {
           String sql = insertComputer;
-          try (PreparedStatement pstmt = ConnectionMySQLSansHikari
-               .getInstanceConnection()
+          try (PreparedStatement pstmt = connectionMySQLSansHikari
                .getConnection()
                .prepareStatement(sql)) {
 
@@ -158,8 +152,7 @@ public class ComputerDAO {
 
      public void update(BeanComputer computerBean) {
           String sql = updateComputer;
-          try (PreparedStatement pstmt = ConnectionMySQLSansHikari
-               .getInstanceConnection()
+          try (PreparedStatement pstmt = connectionMySQLSansHikari
                .getConnection()
                .prepareStatement(sql)) {
 
@@ -205,8 +198,7 @@ public class ComputerDAO {
 
           try (
 
-                    PreparedStatement pstmt = ConnectionMySQLSansHikari
-                         .getInstanceConnection()
+                    PreparedStatement pstmt = connectionMySQLSansHikari
                          .getConnection()
                          .prepareStatement(sql)) {
                pstmt
@@ -222,8 +214,7 @@ public class ComputerDAO {
 
 
      public void updateComputer(String sql) {
-          try (PreparedStatement pstmt = ConnectionMySQLSansHikari
-               .getInstanceConnection()
+          try (PreparedStatement pstmt = connectionMySQLSansHikari
                .getConnection()
                .prepareStatement(sql)) {
                pstmt

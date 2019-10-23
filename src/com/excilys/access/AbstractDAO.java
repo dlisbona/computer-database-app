@@ -1,7 +1,10 @@
 package com.excilys.access;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public abstract class AbstractDAO {
 
+     @Autowired
      private static FactoryDAO factoryDAO;
 
 
@@ -11,8 +14,7 @@ public abstract class AbstractDAO {
      }
 
 
-
-     public static void setFactoryDAO(FactoryDAO setFactoryDAO) {
-          factoryDAO = setFactoryDAO;
-     }
+     // public static void setFactoryDAO(FactoryDAO setFactoryDAO) {
+     // factoryDAO = setFactoryDAO;
+     // }
 }

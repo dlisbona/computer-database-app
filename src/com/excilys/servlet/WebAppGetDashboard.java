@@ -4,31 +4,47 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.access.ComputerDAO;
 import com.excilys.services.ComputerService;
 
-
+@Component
 @WebServlet(name = "dashboard", urlPatterns = "/dashboard")
 @SuppressWarnings("serial")
 public class WebAppGetDashboard extends HttpServlet {
      int pagination = 10;
      private int defaultReglage = 0;
-     static ComputerService computerService;
+
+     @Autowired
+     private ComputerService computerService;
+     @Autowired
+     private ComputerDAO computerDAO;
 
 
 
-     public static void setComputerService(ComputerService setComputerService) {
-
-          computerService = setComputerService;
+     @Override
+     public void init(ServletConfig config) throws ServletException {
+          super.init(config);
+          SpringBeanAutowiringSupport
+               .processInjectionBasedOnCurrentContext(this);
      }
 
+
+
+     // public static void setComputerService(ComputerService setComputerService) {
+     //
+     // computerService = setComputerService;
+     // }
 
 
      public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,8 +56,8 @@ public class WebAppGetDashboard extends HttpServlet {
                .getRequestDispatcher("/WEB-INF/dashboard.jsp");
           int computerListTotalLenght;
 
-          computerService
-               .getComputerService();
+          // computerService
+          // .getComputerService();
 
           // ComputerService computerService = ComputerService
           // .getInstance();
@@ -167,8 +183,6 @@ public class WebAppGetDashboard extends HttpServlet {
                     .getParameterValues("selection");
                String[] idComputerParsed = idComputerCheckbox[0]
                     .split(",");
-               ComputerDAO computerDAO = ComputerDAO
-                    .getInstanceComputerDAO();
 
                for (String ordinateur : idComputerParsed) {
 
@@ -176,8 +190,9 @@ public class WebAppGetDashboard extends HttpServlet {
                          .parseInt(ordinateur);
                     computerDAO
                          .delete(idComputer);
-
                }
+
+
                doGet(request, response);
           } catch (Exception e) {
                throw new ServletException(e);

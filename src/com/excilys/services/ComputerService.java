@@ -3,26 +3,31 @@ package com.excilys.services;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.excilys.DTO.ComputerDTO;
-import com.excilys.UI.UserInterface;
-import com.excilys.access.AbstractDAO;
 import com.excilys.access.ComputerDAO;
 import com.excilys.mapper.Mapper;
 import com.excilys.model.BeanComputer;
 
-public class ComputerService extends AbstractDAO {
+
+@Component
+public class ComputerService extends AbstractService {
      private static ComputerService instanceComputerService;
      private String computerJoinCompany = "SELECT computer.id,computer.name,computer.introduced, computer.discontinued,company.name as company_name " + "FROM computer " + "LEFT OUTER JOIN company ON computer.company_id=company.id limit ";
+
+     @Autowired
+     private ComputerDAO computerDAO;
 
 
 
      public ComputerService() {}
 
-
-
-     public ComputerService getComputerService() {
-          return new ComputerService();
-     }
+     //
+     //
+     // public ComputerService getComputerService() {
+     // return new ComputerService();
+     // }
 
 
 
@@ -33,8 +38,8 @@ public class ComputerService extends AbstractDAO {
           return instanceComputerService;
      }
 
-     final ComputerDAO computerDAO = getFactoryDAO()
-          .getComputerDAO();
+     // final ComputerDAO computerDAO = getFactoryDAO()
+     // .getComputerDAO();
 
      List<ComputerDTO> computerDTOList = new ArrayList<ComputerDTO>();
      List<BeanComputer> computerList = new ArrayList<BeanComputer>();
@@ -215,8 +220,8 @@ public class ComputerService extends AbstractDAO {
                     break;
                case exit:
 
-                    UserInterface
-                         .setFieldUpdate(6);
+                    // UserInterface
+                    // .setFieldUpdate(6);
 
                     break;
           }
