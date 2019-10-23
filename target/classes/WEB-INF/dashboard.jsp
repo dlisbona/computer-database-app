@@ -50,7 +50,7 @@
 
         <div class="container" style="margin-top: 10px;">
         
-            <table class="table table-striped table-bordered" pagesize="3">
+            <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <!-- Variable declarations for passing labels as parameters -->
@@ -145,6 +145,7 @@
                 </a>
             </li>
         </ul>
+        </div>
 
         <div class="btn-group btn-group-sm pull-right" role="group" >
    
