@@ -1,5 +1,8 @@
 package com.excilys.services;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public abstract class AbstractService {
 
      private static ComputerService computerService;

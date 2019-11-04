@@ -27,6 +27,7 @@ public class WebAppGetDashboard extends HttpServlet {
 
      @Autowired
      private ComputerService computerService;
+
      @Autowired
      private ComputerDAO computerDAO;
 
@@ -41,12 +42,6 @@ public class WebAppGetDashboard extends HttpServlet {
 
 
 
-     // public static void setComputerService(ComputerService setComputerService) {
-     //
-     // computerService = setComputerService;
-     // }
-
-
      public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
           List<ComputerDTO> computerListTotal = new ArrayList<ComputerDTO>();
@@ -56,24 +51,11 @@ public class WebAppGetDashboard extends HttpServlet {
                .getRequestDispatcher("/WEB-INF/dashboard.jsp");
           int computerListTotalLenght;
 
-          // computerService
-          // .getComputerService();
-
-          // ComputerService computerService = ComputerService
-          // .getInstance();
-
-          // servletContext
-          // .getAttribute("computerListTotal");
-
 
           try {
 
                String pageDirection = request
                     .getParameter("page");
-               //
-               // servletContext
-               // .getAttribute("computerListTotal");
-
 
                if(pageDirection != null) {
 
