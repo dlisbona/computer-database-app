@@ -22,7 +22,7 @@ public class DashboardControler {
 
 
 
-     @GetMapping(value = "dashboardcontroller")
+     @GetMapping(value = "dashboard")
      public String getDashboard(ModelMap model) throws ServletException {
           List<ComputerDTO> computerListTotal = new ArrayList<ComputerDTO>();
           int computerListTotalLenght;
@@ -41,6 +41,8 @@ public class DashboardControler {
                               if(pagination > 0) pagination -= 10;
 
                               computerListTotal
+                                   .clear();
+                              model
                                    .clear();
 
                               computerListTotal = computerService
@@ -63,6 +65,8 @@ public class DashboardControler {
 
                               computerListTotal
                                    .clear();
+                              model
+                                   .clear();
 
                               computerListTotal = computerService
                                    .getComputerList("listePagination", defaultReglage, pagination);
@@ -80,6 +84,7 @@ public class DashboardControler {
                               }
 
                               if(pagination < computerListTotalPagination) pagination += 10;
+
                               System.out
                                    .println(" la taille de la liste envoyée à la JSP = " + computerListTotal
                                         .size());
@@ -88,11 +93,15 @@ public class DashboardControler {
                                    .addAttribute("computerListTotalLenght", computerListTotalLenght);
                               model
                                    .addAttribute("computerListTotal", computerListTotal);
+
                               return "dashboard";
 
                          default:
+
                               pagination = 10;
                               computerListTotal
+                                   .clear();
+                              model
                                    .clear();
 
                               computerListTotal = computerService
@@ -100,10 +109,10 @@ public class DashboardControler {
                               computerListTotalLenght = computerService
                                    .getComputerList("listeEntiere", defaultReglage, defaultReglage)
                                    .size();
-                              model
-                                   .addAttribute("computerListTotalLenght", computerListTotalLenght);
-                              model
-                                   .addAttribute("computerListTotal", computerListTotal);
+                              // model
+                              // .addAttribute("computerListTotalLenght", computerListTotalLenght);
+                              // model
+                              // .addAttribute("computerListTotal", computerListTotal);
                               return "dashboard";
 
 
@@ -111,8 +120,9 @@ public class DashboardControler {
 
                } else {
                     pagination = 10;
-
                     computerListTotal
+                         .clear();
+                    model
                          .clear();
 
                     computerListTotal = computerService
