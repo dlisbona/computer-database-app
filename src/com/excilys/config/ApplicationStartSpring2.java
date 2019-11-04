@@ -13,7 +13,6 @@ public class ApplicationStartSpring2 extends AbstractAnnotationConfigDispatcherS
 
      @Override
      protected Class<?>[] getServletConfigClasses() {
-
           return new Class[] {DispatcherServletSpring.class};
      }
 
