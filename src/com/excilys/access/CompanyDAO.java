@@ -18,10 +18,6 @@ public class CompanyDAO {
 
 
 
-     public CompanyDAO() {}
-
-
-
      public List<BeanCompany> requete(String requeteSQL) {
           List<BeanCompany> companies = new ArrayList<BeanCompany>();
           Statement statement;
