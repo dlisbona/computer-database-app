@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import com.excilys.DTO.ComputerDTO;
 import com.excilys.services.ComputerService;
 
@@ -16,6 +17,8 @@ import com.excilys.services.ComputerService;
 public class DashboardControler {
      private int pagination = 10;
      private int defaultReglage = 0;
+     List<ComputerDTO> computerListTotal = new ArrayList<ComputerDTO>();
+     private int computerListTotalLenght;
 
      @Autowired
      private ComputerService computerService;
@@ -23,15 +26,9 @@ public class DashboardControler {
 
 
      @GetMapping(value = "dashboard")
-     public String getDashboard(ModelMap model) throws ServletException {
-          List<ComputerDTO> computerListTotal = new ArrayList<ComputerDTO>();
-          int computerListTotalLenght;
+     public String getDashboard(ModelMap model, @RequestParam(name = "page", required = false) String pageDirection) throws ServletException {
 
           try {
-
-
-               String pageDirection = (String) model
-                    .getAttribute("page");
 
                if(pageDirection != null) {
 
@@ -109,10 +106,7 @@ public class DashboardControler {
                               computerListTotalLenght = computerService
                                    .getComputerList("listeEntiere", defaultReglage, defaultReglage)
                                    .size();
-                              // model
-                              // .addAttribute("computerListTotalLenght", computerListTotalLenght);
-                              // model
-                              // .addAttribute("computerListTotal", computerListTotal);
+
                               return "dashboard";
 
 
@@ -130,7 +124,6 @@ public class DashboardControler {
                     computerListTotalLenght = computerService
                          .getComputerList("listeEntiere", defaultReglage, defaultReglage)
                          .size();
-
                     model
                          .addAttribute("computerListTotalLenght", computerListTotalLenght);
                     model

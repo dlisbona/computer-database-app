@@ -31,10 +31,10 @@
 
 
 					<form
-						action="/Application-training/editcomputer?computerId=${computerDTOList.get(0).getId()}&computerName=${computerDTOList.get(0).getName()}"
+						action="/Application-training/editcomputer?computerId=${computerDTOList.getId()}&computerName=${computerDTOList.getName()}"
 						method="POST">
 
-						<input type="hidden" value="${computerDTOList.get(0).getId()}"
+						<input type="hidden" value="${computerDTOList.getId()}"
 							name="computerId" /> <input type="hidden"
 							name="companyNameIdSelected" value=" ${companySelected.getId()}" />
 
@@ -43,7 +43,7 @@
 								<label for="computerName">Computer name</label> <input
 									type="text" class="form-control" id="computerName"
 									name="nameComputer" placeholder="Name computer"
-									value="${computerDTOList.get(0).getName()}">
+									value="${computerDTOList.getName()}">
 							</div>
 							<p id="ajaxcomputerNameResponse"></p>
 
@@ -51,14 +51,14 @@
 								<label for="introduced">Introduced date</label> <input
 									type="date" class="form-control" id="introduced"
 									name="introducedDate" placeholder="Date introduced"
-									value="${computerDTOList.get(0).getIntroduced()}">
+									value="${computerDTOList.getIntroduced()}">
 							</div>
 
 							<div class="form-group">
 								<label for="discontinued">Discontinued date</label> <input
 									type="date" class="form-control" id="discontinued"
 									name="discontinuedDate" placeholder="Date discontinued"
-									value="${computerDTOList.get(0).getDiscontinued()}">
+									value="${computerDTOList.getDiscontinued()}">
 							</div>
 
 							<h4>Edit Computer ${erreurDates}</h4>
