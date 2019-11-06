@@ -5,10 +5,13 @@ $(document).ready(function() {
 		$.get('editcomputer', {
 			computerName : name
 		}, function(responseText) {
-			if (responseText === "Vide") {
+			vide = "\nVide";
+			if (JSON.stringify(responseText).trim === JSON.stringify(vide).trim) {
 				$('#ajaxcomputerNameResponse').text(responseText);
-			} else {
+
+			} else if (JSON.stringify(responseText).trim === JSON.stringify("").trim){
 				$('#ajaxcomputerNameResponse').text("");
+
 			}
 		});
 	});
