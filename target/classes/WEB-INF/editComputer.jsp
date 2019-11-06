@@ -27,15 +27,15 @@
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<div class="label label-default pull-right"></div>
-					<h1>Edit Computer ${computerDTO.getName()}</h1>
+					<h1>Edit Computer ${computer.getName()}</h1>
 
 
 					<form
-						action="/Application-training/editcomputer?computerId=${computerDTOList.getId()}&computerName=${computerDTOList.getName()}"
+						action="/Application-training/editcomputer?computerId=${computer.getId()}&computerName=${computerDTOList.getName()}"
 						method="POST">
 
-						<input type="hidden" value="${computerDTOList.getId()}"
-							name="computerId" /> <input type="hidden"
+						<input type="hidden" value="${computer.getId()}"
+							name="computerIdJSP" /> <input type="hidden"
 							name="companyNameIdSelected" value=" ${companySelected.getId()}" />
 
 						<fieldset>
@@ -43,7 +43,7 @@
 								<label for="computerName">Computer name</label> <input
 									type="text" class="form-control" id="computerName"
 									name="nameComputer" placeholder="Name computer"
-									value="${computerDTOList.getName()}">
+									value="${computer.getName()}">
 							</div>
 							<p id="ajaxcomputerNameResponse"></p>
 
@@ -51,14 +51,14 @@
 								<label for="introduced">Introduced date</label> <input
 									type="date" class="form-control" id="introduced"
 									name="introducedDate" placeholder="Date introduced"
-									value="${computerDTOList.getIntroduced()}">
+									value="${computer.getIntroduced()}">
 							</div>
 
 							<div class="form-group">
 								<label for="discontinued">Discontinued date</label> <input
 									type="date" class="form-control" id="discontinued"
 									name="discontinuedDate" placeholder="Date discontinued"
-									value="${computerDTOList.getDiscontinued()}">
+									value="${computer.getDiscontinued()}">
 							</div>
 
 							<h4>Edit Computer ${erreurDates}</h4>

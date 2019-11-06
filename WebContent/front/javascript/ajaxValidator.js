@@ -6,11 +6,13 @@ $(document).ready(function() {
 			computerName : name
 		}, function(responseText) {
 			vide = "\nVide";
-			if (JSON.stringify(responseText).trim === JSON.stringify(vide).trim) {
+			if (responseText === vide) {
 				$('#ajaxcomputerNameResponse').text(responseText);
-
-			} else if (JSON.stringify(responseText).trim === JSON.stringify("").trim){
+				console.log("notok");
+				responseText = "";
+			} else {
 				$('#ajaxcomputerNameResponse').text("");
+				console.log("ok");
 
 			}
 		});
