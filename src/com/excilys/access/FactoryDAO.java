@@ -14,17 +14,6 @@ public class FactoryDAO extends AbstractDAO {
 
 
 
-     // public void setComputerDAO(ComputerDAO setComputerDAO) {
-     // computerDAO = setComputerDAO;
-     // }
-     //
-     //
-     //
-     // public void setCompanyDAO(CompanyDAO setCompanyDAO) {
-     // companyDAO = setCompanyDAO;
-     // }
-
-
      public ComputerDAO getComputerDAO() {
           return computerDAO;
      }

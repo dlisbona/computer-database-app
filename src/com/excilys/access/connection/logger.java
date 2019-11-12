@@ -1,4 +1,4 @@
-package com.excilys.access;
+package com.excilys.access.connection;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;

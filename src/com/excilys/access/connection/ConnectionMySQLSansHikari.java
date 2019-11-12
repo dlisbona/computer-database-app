@@ -1,4 +1,4 @@
-package com.excilys.access;
+package com.excilys.access.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,19 +28,6 @@ public class ConnectionMySQLSansHikari {
                     .printStackTrace();
           }
      }
-
-
-     //
-     // public static ConnectionMySQLSansHikari getInstanceConnection() throws SQLException {
-     // if(instanceConnection == null) {
-     // instanceConnection = new ConnectionMySQLSansHikari();
-     // } else if(instanceConnection
-     // .getConnection()
-     // .isClosed()) {
-     // instanceConnection = new ConnectionMySQLSansHikari();
-     // }
-     // return instanceConnection;
-     // }
 
 
 

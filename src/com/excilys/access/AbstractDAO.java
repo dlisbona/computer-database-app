@@ -13,8 +13,4 @@ public abstract class AbstractDAO {
           return factoryDAO;
      }
 
-
-     // public static void setFactoryDAO(FactoryDAO setFactoryDAO) {
-     // factoryDAO = setFactoryDAO;
-     // }
 }
